@@ -1,0 +1,65 @@
+# ThreadInterference
+
+Thread interference in java is a condition which occurs when more than one threads, executing simultaneously, access same piece of data. When more than one threads have access to same data, it is possible that data may get corrupted or one may not get the desired output. Thread interference occurs when code written is not thread safe.
+
+How To Avoid Thread Interference or How To Acheive Thread Safeness?
+
+By declaring the method as synchronized.
+By declaring the variables as final.
+By declaring the variable as volatile.
+By creating the immutable objects.
+By using Atomic operations.
+By restricting the access to same object by multiple threads.
+
+synchronized:
+
+1.Synchronization in java is a strategy or a method to avoid thread interference, 
+2.Through sync, we can make the threads to execute particular method or block in sync not simultaneously.
+3.Synchronization in java is implemented using synchronized keyword. 
+4.synchronized keyword can be used with methods or blocks but not with the variables.
+
+The Logic Behind The Synchronization In Java :
+
+The synchronization in java is built around an entity called object lock or monitor. 
+
+Synchronized Blocks:
+
+synchronized block takes one argument and it is called mutex.
+
+Deadlock:
+
+Deadlock in java is a condition which occurs when two or more threads get blocked waiting for each other for an infinite period of time to release the resources(Locks) they hold. Deadlock is the common problem in multi threaded programming which can completely stops the execution of an application. So, extra care need to be taken while writing the multi threaded programs so that deadlock never occurs.
+
+Detect The Deadlocked Threads In Java
+
+
+Programmatically, You can detect the threads which have entered into deadlock condition and also you can retrieve the details about them. This can be done using ThreadMXBean interface of java.lang.Management package. You can go through the oracle docs of ThreadMXBean interface here.
+
+First, you have to get an instance of ThreadMXBean using getThreadMXBean() method of ManagementFactory, like this.
+
+ThreadMXBean bean = ManagementFactory.getThreadMXBean();
+After getting an instance of ThreadMXBean, call findMonitorDeadlockedThreads() method on it. It returns an array of type long containing ids of all currently deadlocked threads.
+
+long ids[] = bean.findMonitorDeadlockedThreads();
+After getting the ids of deadlocked threads, pass these ids to getThreadInfo() method of ThreadMXBean. It will return an array of ThreadInfo objects, where one ThreadInfo object contains the details of one deadlocked thread.
+
+ThreadInfo threadInfo[] = bean.getThreadInfo(ids);
+Iterate the ThreadInfo array to get the details of individual deadlocked thread.
+
+for (ThreadInfo threadInfo1 : threadInfo)
+{
+    System.out.println(threadInfo1.getThreadName());    //Prints the name of deadlocked thread
+}
+
+Here are the some methods of ThreadInfo class which are useful to retrieve the details of deadlocked threads.
+
+getThreadId()               —>    Returns the ID of a deadlocked thread.
+
+getThreadName()         —>     Returns the name of a deadlocked thread.
+
+getBlockedTime()          —>    Returns the elapsed time in milli seconds that a thread is in deadlock condition.
+
+getLockName()             —>    Returns string representation of an object for which thread has been waiting.
+
+getLockOwnerId()         —>    Returns ID of a thread that currently owns the object lock.
+

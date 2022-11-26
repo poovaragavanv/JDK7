@@ -1,0 +1,32 @@
+For Loop
+For loop executes group of Java statements as long as the boolean condition evaluates to true.
+
+For loop combines three elements which we generally use: initialization statement, boolean expression and increment or decrement statement.
+
+For loop syntax
+
+for( <initialization> ; <condition> ; <statement> ){
+ 
+        <Block of statements>;
+ 
+}
+
+The initialization statement is executed before the loop starts. It is generally used to initialize the loop variable.
+Condition statement is evaluated before each time the block of statements are executed. Block of statements are executed only if the boolean condition evaluates to true.
+
+Statement is executed after the loop body is done. Generally it is being used to increment or decrement the loop variable.
+
+Following example shows use of simple for loop.
+for(int i=0 ; i < 5 ; i++)
+{
+        System.out.println(“i is : “ + i);
+}
+
+It is possible to initialize multiple variable in the initialization block of the for loop by separating it by comma as given in the below example.
+for(int i=0, j =5 ; i < 5 ; i++)
+
+It is also possible to have more than one increment or decrement section as well as given below.
+for(int i=0; i < 5 ; i++, j--)
+
+However it is not possible to include declaration and initialization in the initialization block of the for loop.
+Also, having multiple conditions separated by comma also generates the compiler error. However, we can include multiple condition with && and || logical operators.

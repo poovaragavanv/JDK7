@@ -1,0 +1,118 @@
+Abstract class in Java Important Points
+
+
+
+1.abstract keyword is used to create an abstract class in java.
+
+2.Abstract class in java can’t be instantiated.
+
+3.We can use abstract keyword to create an abstract method, an abstract method doesn’t have body.
+
+4.If a class have abstract methods, then the class should also be abstract using abstract keyword, else it will not compile.
+5.It’s not necessary to have abstract class to have abstract method.
+
+6.If abstract class doesn’t have any method implementation, its better to use interface because java doesn’t support multiple class inheritance.
+
+7.The subclass of abstract class in java must implement all the abstract methods unless the subclass is also an abstract class.
+
+8.All the methods in an interface are implicitly abstract unless the interface methods are static or default.
+
+9.Static methods and default methods in interfaces are added in Java 8, for more details read Java 8 interface changes.
+
+10.Java Abstract class can implement interfaces without even providing the implementation of interface methods.
+
+11.Java Abstract class is used to provide common method implementation to all the subclasses or to provide default implementation.
+12.We can run abstract class in java like any other class if it has main() method.
+
+
+
+Interface
+
+Rules:
+
+*Interface must be declare with interface keyword.
+
+ * Like abstract class, we can't create an object of abstract class.
+
+ * All methods in interface are public and abstract.
+ 
+* We must implement all method in derived class.
+ 
+* A class can inherit interface using implements keyword.
+ 
+* An interface is a blueprint of a class, it can have methods and variables like a class but methods 
+ 
+* declared in a interface will be by default abstract(only declaration no body) and the variables declared 
+ 
+* will be public, static & final by default.
+
+
+Interface is used in situation, when we need to restrict derived class to implements all methods. 
+
+This can be done by making abstract class with all abstract methods, then why use interface? 
+The answer is, a class can inherit only one class at a time but a class can implement more than one interface 
+at a time along with another class.
+
+Abstract:
+Abstract class is used in situation, when we have partial set of implementation of methods in a class. 
+
+For example, consider a class have four methods. Out of four methods, we have an implementation of two methods 
+and we need to restrict derived class to implement other two methods. In these kind of situations, we should use abstract class.
+
+
+Marker interface
+
+
+# A Marker interface is a interface with no variables and methods, in simple words, we can say that empty interface 
+in java is called marker interface. Serializable, Cloneable, Remote Interface are some of the examples of Marker Interface.
+
+
+
+# What is the use of Marker Interface?
+	
+	When we look closely the marker interface doesn’t have any methods in it, 
+so then comes the question what is the use of it then? If you look closely Serializable, Cloneable, Remote Interface it looks like they will indicate something to compiler or JVM. So if the JVM sees Clonnable 
+	it performs some operation to support cloning. Same applies to the Serializable and other marker interfaces as well.
+
+
+# Why this indication cannot be done using a flag variable?
+
+	So now we know the what is the use of a marker interface, now again comes a question that why it cannot be done 
+	using a flag variable. Yes, you can do it using a flag variable but by using a Marker Interface you can have a 
+	more readable code. Later from java 1.5, the need for the marker interface is eliminated by the introduction of 
+	Java Annotation feature. It will be a good option to use the annotation rather than marker interface as annotations 
+ 	will have more advantages than a marker interface.
+
+
+
+# Some examples of Java Marker Interface
+
+ java.lang.Cloneable, java.util.EventListener,java.io.Serializable,java.rmi.Remote
+	
+
+# Marker/Tagging Interfaces:
+
+	An interface with no methods is known as marker or tagged interface.
+
+
+# Why marker interface used:  
+
+It provides some useful information to JVM/compiler so that JVM/compiler performs some special operations on it. 
+It is used for better readability of code.  Example: Serializable, Clonnable etc. 
+
+
+# Syntax:
+
+	
+public interface Interface_Name 
+	
+{
+
+	//Empty
+	
+}
+
+
+
+
+

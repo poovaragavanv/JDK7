@@ -1,0 +1,154 @@
+SET :
+#The java.util.Set interface is a subtype of the java.util.Collection interface.It represents set of objects, meaning each element can only exists once in a Set.
+#Implementations
+	java.util.EnumSet //Special Implentaions
+	java.util.concurrent.CopyOnWriteArraySet<E> //Special Implentaions
+	java.util.HashSet
+	java.util.LinkedHashSet
+	java.util.TreeSet
+
+java.util.HashSet => HashSet is backed by a HashMap. It makes no guarantees about the sequence of the elements when you iterate them
+
+java.util.LinkedHashSet => LinkedHashSet differs from HashSet by guaranteeing that the order of the elements during iteration is the same as the order they were inserted into the LinkedHashSet. Reinserting an element that is already in the LinkedHashSet does not change this order.
+
+java.util.TreeSet => TreeSet also guarantees the order of the elements when iterated, but the order is the sorting order of the elements. In other words, the order in which the elements whould be sorted if you used a Collections.sort() on a List or array containing these elements. This order is determined either by their natural order (if they implement Comparable), or by a specific Comparator implementation.
+
+#Here are a few examples of how to create a Set instance:
+
+Set setA = new EnumSet();
+Set setB = new HashSet();
+Set setC = new LinkedHashSet();
+Set setD = new TreeSet();
+
+#SortedSet
+java.util.SortedSet interface is a subtype of the java.util.Set interface. It behaves like a normal set with the exception that the elements are sorted internally. This means that when you iterate the elements of a SortedSet the elements are returned in the sorted order.
+
+The order of the sorting is either the natural sorting order of the elements (if they implement java.lang.Comparable), or the order determined by a Comparator that you can give to the SortedSet.
+
+#NaviagbelSet
+
+Here is a list of the topics covered in this text:
+
+descendingIterator() and descendingSet()
+headSet(), tailSet() and subSet()
+ceiling(), floor(), higher() and lower()
+pollFirst() and pollLast()
+
+Here is a simple example:
+
+NavigableSet reverse = original.descendingSet();
+The descendingIterator() method allows you to iterate the elements of the NavigableSet (which is also a SortedSet) in reverse order, without changing the order of the elements internally.
+
+Iterator reverse = original.descendingIterator();    
+
+headSet(), tailSet() and subSet()
+The headSet() method returns a view of the original NavigableSet which only contains elements that are "less than" the given element. Here is an example:
+
+NavigableSet original = new TreeSet();
+original.add("1");
+original.add("2");
+original.add("3");
+
+//this headset will contain "1" and "2"
+SortedSet headset = original.headSet("3");
+
+//this headset will contain "1", "2", and "3" because "inclusive"=true
+NavigableSet headset = original.headSet("3", true);
+The tailSet() method works the same way, except it returns all elements that are higher than the given parameter element.
+
+The subSet() allows you to pass two parameters demarcating the boundaries of the view set to return. The elements matching the first boundary is included, where as elements matching the last boundary are not. Here is an example:
+
+NavigableSet original = new TreeSet();
+original.add("1");
+original.add("2");
+original.add("3");
+original.add("4");
+original.add("5");
+
+//this subset will contain "2" and "3"
+SortedSet    subset  = original.subSet("2", "4");
+
+//this subset will contain "2", "3" and "4" because
+//    fromInclusive=true, and toInclusive=true 
+NavigableSet subset = original.subSet("2", true, "4", true);
+
+ceiling(), floor(), higher(), and lower()
+The ceiling() method returns the least (smallest) element in this set that is greater than or equal to the element passed as parameter to the ceiling() method. Here is an example:
+
+NavigableSet original = new TreeSet();
+original.add("1");
+original.add("2");
+original.add("3");
+
+
+//ceiling will be "2".
+Object ceiling = original.ceiling("2");
+
+//floor will be "2".
+Object floor = original.floor("2");
+The floor() method does the opposite of ceiling()
+
+The higher() method returns the least (smallest) element in this set that is greater than (not equal too) the element passed as parameter to the higher() method. Here is an example:
+
+NavigableSet original = new TreeSet();
+original.add("1");
+original.add("2");
+original.add("3");
+
+
+//higher will be "3".
+Object higher = original.higher("2");
+
+//lower will be "1"
+Object lower = original.lower("2");
+The lower() method does the opposite of the higher() method.
+
+
+pollFirst() and pollLast()
+The pollFirst() method returns and removes the "first" element in the NavigableSet or null if the set is empty. The pollLast() returns and removes the "last" element in the set or null if the set is empty. "First" means smallest element according to the sort order of the set. "Last" means largest according to teh element sorting order of the set.
+
+Here are two examples:
+
+NavigableSet original = new TreeSet();
+original.add("1");
+original.add("2");
+original.add("3");
+
+
+//first is "1"
+Object first = original.pollFirst();
+
+//last is "3"
+Object last = original.pollLast();
+
+
+Properties Of Set :
+
+1.Set contains only unique elements. It does not allow duplicates.
+Set can contain only one null element.
+Random access of elements is not possible.
+Order of elements in a set is implementation dependent. HashSet elements are ordered on hash code of elements. TreeSet elements are ordered according to supplied Comparator (If no Comparator is supplied, elements will be placed in ascending order) and LinkedHashSet maintains insertion order.
+Set interface contains only methods inherited from Collection interface. It does not have it’s own methods. But, applies restriction on methods so that duplicate elements are always avoided.
+One more good thing about Set interface is that the stronger contract between equals() and hashCode() methods. According to this contract, you can compare two set instances of different implementation types (HashSet, TreeSet and LinkedHashSet).
+Two set instances, irrespective of their implementation types, are said to be equal if they contain same elements.
+
+SortedSet interface extends Set interface. SortedSet is a set in which elements are placed according to supplied comparator. This Comparator is supplied while creating a SortedSet. If you don’t supply comparator, elements will be placed in ascending order.
+
+Properties Of SortedSet Interface :
+
+SortedSet can not have null elements. If you try to insert null element, it gives NullPointerException at run time.
+As SortedSet is a set, duplicate elements are not allowed.
+SortedSet elements are sorted according to supplied Comparator. If you don’t mention any Comparator while creating a SortedSet, elements will be placed in ascending order.
+Inserted elements must be of Comparable type and they must be mutually Comparable.
+You can retrieve first element and last elements of the SortedSet. You can’t access SortedSet elements randomly. i.e Random access is denied.
+SortedSets returned by headSet(), tailSet() and subSet() methods are just views of the original set. So, changes in the returned set are reflected in the original set and vice versa.
+
+NavigableSet is a SortedSet with navigation facilities. The NavigableSet interface provides many methods through them you can easily find closest matches of any given element. It has the methods to find out less than, less than or equal to, greater than and greater than or equal of any element in a SortedSet.
+
+Properties Of NavigableSet Interface :
+
+NavaigableSet can’t have null elements.
+NavigableSet doesn’t support duplicate elements.
+NavigableSet can be traversed and accessed in either ascending or descending order.
+Methods subSet(), headSet() and tailSet() differ from SortedSet interface in taking additional arguments describing whether upper bound and lower bound are inclusive or exclusive.
+

@@ -1,0 +1,68 @@
+1. Insert Example
+
+String insertTableSQL = "INSERT INTO DBUSER"
+		+ "(USER_ID, USERNAME, CREATED_BY, CREATED_DATE) VALUES"
+		+ "(?,?,?,?)";
+PreparedStatement preparedStatement = dbConnection.prepareStatement(insertTableSQL);
+preparedStatement.setInt(1, 11);
+preparedStatement.setString(2, "rags");
+preparedStatement.setString(3, "system");
+preparedStatement.setTimestamp(4, getCurrentTimeStamp());
+// execute insert SQL stetement
+preparedStatement .executeUpdate();
+
+2. Update
+
+String updateTableSQL = "UPDATE DBUSER SET USERNAME = ? WHERE USER_ID = ?";
+PreparedStatement preparedStatement = dbConnection.prepareStatement(updateTableSQL);
+preparedStatement.setString(1, "rags");
+preparedStatement.setInt(2, 1001);
+// execute insert SQL stetement
+preparedStatement .executeUpdate();
+
+3. Delete
+
+String deleteSQL = "DELETE DBUSER WHERE USER_ID = ?";
+PreparedStatement preparedStatement = dbConnection.prepareStatement(deleteSQL);
+preparedStatement.setInt(1, 1001);
+// execute delete SQL stetement
+preparedStatement.executeUpdate();
+
+4.Select
+
+String selectSQL = "SELECT USER_ID, USERNAME FROM DBUSER WHERE USER_ID = ?";
+PreparedStatement preparedStatement = dbConnection.prepareStatement(selectSQL);
+preparedStatement.setInt(1, 1001);
+//calls the PreparedStatement.executeUpdate()
+ResultSet rs = preparedStatement.executeQuery(selectSQL );
+while (rs.next()) 
+{
+	String userid = rs.getString("USER_ID");
+	String username = rs.getString("USERNAME");
+}
+
+5. Batch Update
+
+dbConnection.setAutoCommit(false);//commit trasaction manually
+
+String insertTableSQL = "INSERT INTO DBUSER"
+			+ "(USER_ID, USERNAME, CREATED_BY, CREATED_DATE) VALUES"
+			+ "(?,?,?,?)";
+PreparedStatement = dbConnection.prepareStatement(insertTableSQL);
+
+preparedStatement.setInt(1, 101);
+preparedStatement.setString(2, "mkyong101");
+preparedStatement.setString(3, "system");
+preparedStatement.setTimestamp(4, getCurrentTimeStamp());
+preparedStatement.addBatch();
+
+preparedStatement.setInt(1, 102);
+preparedStatement.setString(2, "mkyong102");
+preparedStatement.setString(3, "system");
+preparedStatement.setTimestamp(4, getCurrentTimeStamp());
+preparedStatement.addBatch();
+preparedStatement.executeBatch();
+
+dbConnection.commit();
+
+Note : Batch Update is not limit to Insert statement, it’s apply for Update and Delete statement as well.

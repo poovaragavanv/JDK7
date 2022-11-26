@@ -1,0 +1,39 @@
+What is Inheritance ?
+	Inheritance means access the properties and features of one class into another class.The class who is 
+	going to provide its features to another class will be called base class and the class who is using the
+	 properties and features of another class will be called derived class.
+
+Syntax :
+
+public class derived-class-name extends base-class-name 
+{
+	// Write Code Here
+}
+
+public class class-name implements interface-name 
+{
+	// Write Code here
+}
+Types:
+Hybrid Inheritance is the combination of both Single and Multiple Inheritance. 
+Again Hybrid inheritance is also not directly supported in Java only through interface we can achieve this. 
+Flow diagram of the Hybrid inheritance will look like below. As you can ClassA will be acting as the Parent class for ClassB & ClassC and ClassB & ClassC will be acting as Parent for ClassD.
+
+Disadvantages of Inheritance
+
+1. Both classes (super and subclasses) are tightly-coupled.
+2. As they are tightly coupled (binded each other strongly with extends keyword), 
+	they cannot work independently of each other.
+3. Changing the code in super class method also affects the subclass functionality.
+4. If super class method is deleted, the code may not work as subclass may call the super class method 
+	with super keyword. Now subclass method behaves independently.
+	
+What is not possible using java class Inheritance?
+
+ 
+
+1. Private members of the superclass are not inherited by the subclass and can only be indirectly accessed.
+
+2. Members that have default accessibility in the superclass are also not inherited by subclasses in other packages, as these members are only accessible by their simple names in subclasses within the same package as the superclass.
+
+3. Since constructors and initializer blocks are not members of a class, they are not inherited by a subclass.

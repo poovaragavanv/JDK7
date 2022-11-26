@@ -1,0 +1,82 @@
+Queue Interface
+
+Queue Interface extends Collection interface. It defines queue data structure which is normally First-In-First-Out. Queue is a data structure in which elements are added from one end and elements are deleted from another end. But, exception being the Priority Queue in which elements are removed from one end, but elements are added according to the order defined by the supplied comparator. 
+
+How Typical Queue Works?
+
+Queue is a data structure where elements are added from one end called tail of the queue and elements are removed from another end called head of the queue. Queue is also first-in-first-out type of data structure (except priority queue). That means an element which is inserted first will be the first element to be removed from the queue. You can’t add or get or set elements at an arbitrary position in the queues. Here is the diagram which shows how typical queue works.
+queue interface
+
+Properties Of Queue :
+
+1.Null elements are not allowed in the queue. If you try to insert null object into the queue, it throws NullPointerException.
+Queue can have duplicate elements.
+2.Unlike a normal list, queue is not random access. i.e you can’t set or insert or get elements at an arbitrary positions.
+3.In most of cases, elements are inserted at one end called tail of the queue and elements are removed or retrieved from another end called head of the queue.
+4.In the Queue Interface, there are two methods to obtain and remove the elements from the head of the queue. They are poll() and remove(). The difference between them is, poll() returns null if the queue is empty and remove() throws an exception if the queue is empty.
+5.There are two methods in the Queue interface to obtain the elements but don’t remove. They are peek() and element(). peek() returns null if the queue is empty and element() throws an exception if the queue is empty.
+
+Methods Of Queue Interface:
+
+Here are the methods of Queue interface. Some of the methods throw an exception if operation is not possible and some methods return a value (null or false) if operation is not possible.
+
+Operation	Throws An Exception If operation is not possible	Returns null or false if operation is not possible
+Add an element to the queue.	add()	offer()
+Retrieve an element from the head of the queue.	element()	peek()
+Retrieve And Remove an element from the head of the queue.	remove()	poll()
+
+# Deque is the short name for “Double Ended Queue“. As the name suggest, Deque is a linear collection of objects which supports insertion and removal of elements from both the ends. The Deque interface defines the methods needed to insert, retrieve and remove the elements from both the ends.
+
+Properties Of Deque :
+
+Unlike Queue, Deque can have null elements. But, it is recommended not to insert null elements as many methods return null to indicate Deque is empty.
+Deque can have duplicate elements.
+You can’t set or get or insert the elements at an arbitrary position of Deque. i.e Random access is not possible with the Deque.
+You can use removeFirstOccurrenec(E e), removeLastOccurrence(E e) and remove(E e) methods to delete the elements from the Deque.
+
+
+package collection;
+
+import java.util.Deque;
+import java.util.LinkedList;
+
+class DequeExample{
+public static void main(String[] args){
+Deque deque=new LinkedList();
+
+//Adding element to the Deque
+deque.add(44);
+deque.offer("test");
+deque.offerFirst("Hello");
+deque.addLast("Roseindia");
+deque.offer(11);
+
+System.out.println("size of deque : "+deque.size());
+System.out.println("Elements in deque: "+deque);
+
+//Deleting element from deque
+deque.remove();
+deque.pollFirst();
+System.out.println("size of deque : "+deque.size());
+System.out.println("Elements in deque: "+deque);
+
+System.out.println("Last element in deque: "+deque.peekLast());
+System.out.println("Top element of deque : "+deque.element());
+
+}
+}
+
+#Deque: abstracts a queue that has two heads. A deque allows adding or removing elements at both ends.
+
+#BlockingQueue: abstracts a type of queues that waits for the queue to be non-empty when retrieving an element, and waits for space to become available in the queue when storing an element.
+
+#BlockingDeque: is similar to BlockingQueue, but for double ended queues. It is sub interface of the
+BlockingQueue.
+
+And since Java 7, the BlockingQueue interface has a new sub interface called TransferQueue, which is a specializedBlockingQueue, which waits for another thread to retrieve an element in the queue.
+
+Basically, Queue provides three primary types of operations which differentiate a queue from others:
+
+Insert: adds an element to the tail of the queue.
+Remove: removes the element at the head of the queue.
+Examine: returns, but does not remove, the element at the head of the queue.

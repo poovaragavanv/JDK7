@@ -1,0 +1,27 @@
+Syncronized in java
+
+#when more than one threads are trying to access a shared resource we need to have some mechanism to ensure that the resource will be used only by one thread at a time. The process by which it is ensured is called synchronization.
+
+#For achieving synchronization in Java concept of monitor is used. Every object created in Java has one associated monitor (mutually exclusive lock). At any given time Only one thread can own the monitor.
+
+#Before any thread executes the code which is with in a synchronized method (or synchronized block) compiler provides instructions to acquire the lock on the specified object.
+
+#When any thread acquires a lock it is said to have entered the monitor. All other threads which need to execute the same shared piece of code (locked monitor) will be suspended until the thread which initially acquired the lock releases it.
+
+
+Where can we use synchronized keyword
+
+The Java programming language provides two basic synchronization idioms: synchronized methods and synchronized statements (also known as synchronized blocks). This can be further divided into use with instance methods and static methods. So, essentially we can have four different ways synchronized keyword can be used.
+
+instance method
+An enclosed code block with in an instance method (Synchronized block).
+static method
+An enclosed code block with in a static method.
+Let's see where and why we should use a specific type of synchronized method or block.
+
+#General Form of synchronized instance method
+
+	public synchronized void method_name(parameter_list)
+	{
+	//Code
+	}

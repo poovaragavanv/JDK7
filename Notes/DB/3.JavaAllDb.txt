@@ -1,0 +1,117 @@
+JDBC's database connection URLs for common databases
+
+1.Driver class name: is name of the class that implements java.sql.Driver interface. The JDBC’s driver manager needs to load this class in order to work with the database driver.
+2.Database URL: a string that contains information about the database to connect to and other configuration properties. This string has its own format and is varied among different databases.
+
+
+ 
+1. MySQL
+
+Driver class name: com.mysql.jdbc.Driver
+
+Format of database URL:
+           jdbc:mysql://[host][,failoverhost...][:port]/[database]
+           [?propertyName1][=propertyValue1][&propertyName2][=propertyValue2]...
+ 
+See more information about MySQL connection properties.
+
+Examples:
+
+JDBC3 =>jdbc:mysql://localhost:3306/test
+JDBC4 =>jdbc:mysql://localhost:3306/test?user=root&password=secret
+ 
+
+2. SQL Server
+Driver class name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+Format of database URL:
+ jdbc:sqlserver://[serverName[\instanceName][:portNumber]][;property=value[;property=value]]
+
+See more information about SQL Server connection properties.
+
+Examples:
+JDBC3 =>jdbc:sqlserver://localhost;integratedSecurity=true;
+JDBC4 =>jdbc:sqlserver://localhost\\sqlexpress;integratedSecurity=true
+
+jdbc:sqlserver://localhost\\sqlexpress;user=sa;password=secret
+
+3. Oracle
+
+Driver class name: oracle.jdbc.OracleDriver
+
+Format of database URL:
+	jdbc:oracle:<drivertype>:@<database>
+
+jdbc:oracle:<drivertype>:<user>/<password>@<database>
+
+where drivertype can be thin, oci or kprb.
+
+Examples:
+jdbc:oracle:thin:@localhost:1521:testdb
+
+jdbc:oracle:thin:root/secret@localhost:1521:testdb
+
+jdbc:oracle:oci:@hoststring
+
+jdbc:oracle:oci:@localhost:1521:testdb
+
+jdbc:oracle:oci:root/secret@hoststring>
+
+Jdbc:oracle:oci:root/secret@localhost:1521:testdb
+
+ 
+4. PostgreSQL
+
+Driver class name: org.postgresql.Driver
+
+Format of database URL:
+	jdbc:postgresql:database
+	jdbc:postgresql://host/database
+	jdbc:postgresql://host:port/database
+
+Examples:
+	jdbc:postgresql:testdb
+	jdbc:postgresql://localhost/testdb
+	jdbc:postgresql://localhost:5432/testdb
+ 
+ 
+5. JavaDB (Apache Derby)
+	Driver class name: org.apache.derby.jdbc.EmbeddedDriver
+Format of database URL:
+         jdbc:derby:[subsubprotocol:][databaseName][;attribute=value]*
+where subsubprotocol can take one of the following values: directory (default), memory, classpath, and jar.
+
+Examples:
+jdbc:derby:testdb
+jdbc:derby:centraldb/sales
+jdbc:derby:sample;create=true
+jdbc:derby:memory:testdb
+jdbc:derby:classpath:testdb
+jdbc:derby:directory:testdb
+jdbc:derby:jar(C:/testdb.jar)/market/asia
+ 
+6. SQLite
+
+Because there is no official JDBC driver for SQLite from www.sqlite.org, the following information is applied for a SQLite JDBC driver provided by www.xerial.org.
+
+	Driver class name: org.sqlite.JDBC
+
+Format of database URL:
+	jdbc:sqlite:database_file_path
+
+Where database_file_path points to relative path or absolute path of a SQLite database file.
+
+Syntax for in-memory SQLite database:
+
+
+jdbc:sqlite::memory:
+
+jdbc:sqlite:
+
+
+Examples:
+
+jdbc:sqlite:sample.db
+jdbc:derby:D:/work/project/data.db
+View code example.
+ 
+NOTE: From JDBC 4.0, loading the driver class explicitly is no longer needed, so you don’t need to care about the driver class name. 

@@ -1,0 +1,15 @@
+What is Static and Dynamic binding in Java with Example
+
+Static and dynamic binding  in Java are two important concept which Java programmer should be aware of. this is directly related to execution of code. If you have more than one method of same name (method overriding) or two variable of same name in same class hierarchy it gets tricky to find out which one is used during runtime as a result of there reference in code. This problem is resolved using static and dynamic binding in Java. For those who are not familiar with binding operation, its process used to link which method or variable to be called as result of there reference in code. Most of the references is resolved during compile time but some references which depends upon Object and polymorphism in Java is resolved during runtime when actual object is available. In this Java tutorial we will see some examples of static and dynamic binding and differences between static binding and dynamic binding in Java.
+
+Difference between Static and Dynamic binding in Java:
+
+1) Static binding in Java occurs during Compile time while Dynamic binding occurs during Runtime.
+
+2) private, final and static methods and variables uses static binding and bonded by compiler while virtual methods are bonded during runtime based upon runtime object.
+
+3) Static binding uses Type(Class in Java)  information for binding while Dynamic binding uses Object to resolve binding.
+
+4) Overloaded methods are bonded using static binding while overridden methods are bonded using dynamic binding at runtime. Here is an example which will help you to understand both static and dynamic binding in Java.
+
+That's all on difference between static and dynamic binding in java. bottom line is static binding is a compile time operation while dynamic binding is a runtime. one uses Type and other uses Object to bind. static, private and final methods and variables are resolved using static binding which makes there execution fast because no time is wasted to find correct method during runtime.

@@ -1,0 +1,39 @@
+The return keyword is used to return from a method 
+when its execution is complete. When a return statement is 
+reached in a method, the program returns to the code that 
+invoked it.
+
+A method can return a value or reference type or 
+does not return a value. 
+If a method does not return a value, 
+the method must be declared void and it doesn’t need to contain a return statement.
+
+If a method declare to return a value, 
+then it must use the return statement within the body of method. The data type of the return value must match the method’s declared return type.
+
+The return keyword is used to stop execution of a method and 
+return a value for the caller. Usage of this keyword is as following:
+
+return value;
+
+where value is can be of:
+
+A reference of any Java object.
+A literal of String, boolean, number or null.
+
+
+For example:
+String getName() {
+    return "Peter";
+}
+ 
+int getAge() {
+    int myAge = 29;
+    return myAge;
+}
+ 
+Object getObject() {
+    Object myObject = new Object();
+    // do something with my object...
+    return myObject;
+}

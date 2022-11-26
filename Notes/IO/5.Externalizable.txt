@@ -1,0 +1,198 @@
+EXTERNALIZABLE INTERFACE 
+
+i.e. in a custom manner with full control and all this could be achieved by using the Externalizable interface which is also a sub-interface of Serializable interface. So before you go further have a look at how to use Serializable interface and what are the differences between Serializable and Externalizable Interface.
+
+
+# MAIN METHODS USED –
+
+Externalization is nothing but Serialization by using Externalizable interface and implementing its two main methods
+
+1.void readExternal(ObjectInput in) – This method uses methods of DataInput for storing primitive data types and for complex objects like Strings, Arrays etc it uses readObject method.
+2.void writeExternal(ObjectOutput out) – This method uses methods of DataOutput for restoring primitive data types and for complex objects like Strings, Arrays etc it uses writeObject method of ObjectOutput.
+
+Externalizable Interface- Java
+Externalizable Interface- Java
+SO THE MAIN QUESTION IS –
+
+# How this process of serialization and deserialization is performed using Externalizable interface?
+
+Whenever there is a call for Serialization process JVM first checks whether the class implements Externalizable interface and if the objects supports this interface then the object is serialized using the writeExternal() method but if the object does not supports Externalizable but implements Serializable then the object is serialized using the ObjectOutputStream.Similarly during the deserialization process readExternal() method of Externalizable interface is used to reconstruct the object but if no support for Externalizable interface is there but Serializable interface is implemented then it uses ObjectInputStream for the object reconstruction process.
+
+Note :– There should be a public no-arg constructor available in the class to be serialized, this is a must condition because in this case since no reflection API is used and only the identity of the class is written to the stream hence rest of the implementation is left for the class and due to this first an object is created using a public no-arg constructor and this is why it ensures the full control over the serialization and deserialization process.
+
+# EXTERNALIZABLE INTERFACE EXAMPLE WITH NO INHERITANCE
+
+Note :– Kindly Read the comments carefully. They might contain some small and important points.
+
+1.)  CAR.JAVA
+package com.workout.io.externalizable;
+ 
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+ 
+public class Car implements Externalizable {
+    private Integer ccOfEngine;
+    private String licenseNumber;
+    private Integer numberOfDoors;
+ 
+    public Integer getCcOfEngine() {
+        return ccOfEngine;
+    }
+ 
+    public void setCcOfEngine(Integer ccOfEngine) {
+        this.ccOfEngine = ccOfEngine;
+    }
+ 
+    public String getLicenseNumber() {
+        return licenseNumber;
+    }
+ 
+    public void setLicenseNumber(String licenseNumber) {
+        this.licenseNumber = licenseNumber;
+    }
+ 
+    public Integer getNumberOfDoors() {
+        return numberOfDoors;
+    }
+ 
+    public void setNumberOfDoors(Integer numberOfDoors) {
+        this.numberOfDoors = numberOfDoors;
+    }
+ 
+    @Override
+    public String toString() {
+        return "Car [ccOfEngine=" + ccOfEngine + ", licenseNumber="
+                + licenseNumber + ", numberOfDoors=" + numberOfDoors + "]";
+    }
+ 
+    @Override
+    public void writeExternal(ObjectOutput out) throws IOException {
+        out.writeInt(ccOfEngine);
+        out.writeObject(licenseNumber);
+//      out.writeInt(numberOfDoors);
+    }
+ 
+    @Override
+    public void readExternal(ObjectInput in) throws IOException,
+            ClassNotFoundException {
+        ccOfEngine = in.readInt();
+        licenseNumber = String.valueOf(in.readObject());
+//      numberOfDoors = in.readInt();
+    }
+}
+
+2.)  SERIALIZATIONUTIL.JAVA
+package com.workout.io.externalizable;
+ 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+ 
+/**
+ * This class is a utility class for performing the serialization and
+ * deserialization operations provided the required information.
+ */
+public class SerializationUtil {
+ 
+    /**
+     * deserialize to Object from given file. We use the general Object so as
+     * that it can work for any Java Class.
+     */
+    public static Object deserialize(String fileName) throws IOException,
+            ClassNotFoundException {
+        FileInputStream fis = new FileInputStream(fileName);
+        BufferedInputStream bis = new BufferedInputStream(fis);
+        ObjectInputStream ois = new ObjectInputStream(bis);
+        Object obj = ois.readObject();
+        ois.close();
+        return obj;
+    }
+ 
+    /**
+     * serialize the given object and save it to given file
+     */
+    public static void serialize(Object obj, String fileName)
+            throws IOException {
+ 
+        FileOutputStream fos = new FileOutputStream(fileName);
+        BufferedOutputStream bos = new BufferedOutputStream(fos);
+        ObjectOutputStream oos = new ObjectOutputStream(bos);
+        oos.writeObject(obj);
+        oos.close();
+    }
+}
+
+3.)  SERIALIZATIONTEST.JAVA
+package com.workout.io.externalizable;
+ 
+import java.io.IOException;
+ 
+public class SerializationTest {
+ 
+    public static void main(String[] args) {
+        Car car = new Car();
+        car.setCcOfEngine(1000);
+        car.setLicenseNumber("AW-23-6528");
+        car.setNumberOfDoors(4);
+        try {
+            /**
+             * Serializing the object
+             */
+            SerializationUtil.serialize(car, "serialization.txt");
+ 
+            /**
+             * Deserializing the object
+             */
+            Car carOutput = (Car) SerializationUtil
+                    .deserialize("serialization.txt");
+            System.out.println(carOutput.toString());
+ 
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+Output:-
+
+Car [ccOfEngine=1000, licenseNumber=AW-23-6528, numberOfDoors=null]
+
+** Suprisingly the output does not contain the value of numberOfDoors and this is because we have commented the lines to save and read the value of this variable in class Car.java.
+If you remove the comments from both the places i.e. line no 47 and 55 of class Car.java you can see the difference in the output as below. This time we value of numberOfDoors will also display.
+
+Output:-
+
+Car [ccOfEngine=1000, licenseNumber=AW-23-6528, numberOfDoors=4]
+Most Important:- One of the most important thing to remember is that the order of storing the variables in method writeExternal should be same as of the variables to be read in method readExternal in the class implementing Externalizable interface.
+
+DIFFERENCE B/W SERIALIZABLE AND EXTERNALIZABLE INTERFACES
+
+
+#Serializable Interface is based on a  recursive algorithm i.e during the serialization besides the fields it will serialize all the objects that can be reached through its instance variables i.e. all the objects that can be reached from that object (provided that all the classes must implement Serializable Interface). This includes the super class of the object until it reaches the “Object” class and the same way the super class of the instance variables until it reaches the “Object” class of those variables. Basically all the objects that it can read. And this leads to a lot of overhead when we want to save only few variable or a small data as compared to the class
+For eg – If you have a class named Mercedes and you just want to store the car series and its car identification number then you can not stop at this only and will have to store all the fields of that class and also of its super class(if exists and implements serializable interface) and a lot more.
+
+# Serializable is a marker interface and hence no need to override any method and whenever there is any change in the entity or bean classes you just need to recompile your program whether in the case of Externalizable interface you have to implement writeExternal() and readExternal() methods which contains the logic to store and retrieve data and with changes you might need to do changes in the code logic.
+
+# Serializable provides you both options i.e. you can handle the process by your own or you can leave it for the process to be done in the default way but in Externalizable you have to provide the logic of the process and have full control over the serialize and deserialize process.
+
+#Serializable involves reflection mechanism to recover the object. This also adds the the metadata i.e. class description, variable information etc of all the serializable classes in the process which adds a lot of data and metadata into the stream and consumes bandwidth and a performance issue.
+
+#A public no-arg constructor is needed while using Externalizable interface but in Serializable it reads the required information from the ObjectInputStream and this is why it uses reflection mechanism.
+
+#You need to define serialVersionUID in case of Serializable and if it is not explicitly defined it will be generated automatically and it is based on all the fields, methods etc of the class and it changes every time you do the changes in the class. You if current id does not match with generated id you will not be able to recover the previously stored data. Since the ID is generated every time it will take considerable amount of time which is not a case with externalizable interface.
+
+#Externalizable interface is fast and also consumes less memory as compared to the other one. Follow this link to see test results.
+
+WHICH INTERFACE SHOULD WE USE
+
+Now the main point is which interface should be used in which condition and the truth is no one can tell you that. You have to decide which interface suits your requirement and which one is suitable for you in the current scenario.In a single project you can mark some classes with Serializable interface and some other with Externalizable interface and I would recommend you to use Serializable interface for most of the classes and use Externalizable for only those –
+
+In which you want complete control over serialization process.
+You are very much concerned about bandwidth and time consumed.
+Your class requires a lot of serializing and deserializing operations as it will save bandwidth.

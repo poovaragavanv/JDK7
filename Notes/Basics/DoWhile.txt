@@ -1,0 +1,60 @@
+Do while loop executes group of Java statements as long as the boolean condition evaluates to true.
+
+It is possible that the statement block associated with While loop never get executed because While loop tests the boolean condition before executing the block of statements associated with it.
+
+In Java programming, sometime it's necessary to execute the block of statements at least once before evaluating the boolean condition. Do while loop is similar to the While loop, but it evaluates the boolean condition after executing the block of the statement.
+
+Do While loop syntax
+
+Do{
+ 
+        <Block of statements>;
+ 
+}while(<boolean condition>);
+Block of statements is any valid Java code. Boolean condition is any valid Java expression that evaluates to boolean value. 
+Braces are options if there is only one statement to be executed.
+
+
+/*
+  Do While loop Example
+  This Java Example shows how to use do while loop to iterate in Java program.
+*/
+ 
+public class DoWhileExample {
+ 
+  public static void main(String[] args) {
+   
+    /*
+     * Do while loop executes statment until certain condition become false.
+     * Syntax of do while loop is
+     *
+     * do
+     *   <loop body>
+     * while(<condition>);
+     *
+     * where <condition> is a boolean expression.
+     *
+     * Please not that the condition is evaluated after executing the loop body.
+     * So loop will be executed at least once even if the condition is false.
+     */
+ 
+    int i =0;  
+   
+    do
+    {
+      System.out.println("i is : " + i);
+      i++;
+     
+    }while(i < 5);
+   
+  }
+}
+ 
+/*
+Output would be
+i is : 0
+i is : 1
+i is : 2
+i is : 3
+i is : 4
+*/

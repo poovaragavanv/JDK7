@@ -1,0 +1,239 @@
+List Interface:
+
+List Interface represents an ordered or sequential collection of objects. 
+This interface has some methods which can be used to store and manipulate the ordered collection of objects. 
+The classes which implement the List interface are called as Lists. ArrayList, Vector and LinkedList are some examples of lists. 
+You have the control over where to insert an element and from where to remove an element in the list.
+
+Here are some properties of lists.
+
+1.Elements of the lists are ordered using Zero based index.
+2.You can access the elements of lists using an integer index.
+3.Elements can be inserted at a specific position using integer index. Any pre-existing elements at or beyond that position are shifted right.
+4.Elements can be removed from a specific position. The elements beyond that position are shifted left.
+5.A list may contain duplicate elements.
+6.A list may contain multiple null elements.
+
+List interface extends Collection interface. So, All 15 methods of Collection interface are inherited to List interface. Along with these methods, another 9 methods are included in the List interface to support the properties of lists. Here is the class diagram of List interface.
+list interface
+
+Additional Methods Of List Interface :
+
+There are 9 additional methods included in List interface along with the methods inherited from Collection Interface. Here is the list and the details of those methods.
+
+SL NO	Methods	Descriptions
+1	E get(int index)	Returns element at the specified position.
+2	E set(int index, E element)	Replaces an element at the specified position with the passed element.
+3	void add(int index, E element)	Inserts passed element at a specified index.
+4	E remove(int index)	Removes an element at specified index.
+5	int indexOf(Object o)	It returns an index of first occurrence of passed object.
+6	int lastIndexOf(Object o)	It returns an index of last occurrence of passed object.
+7	ListIterator<E> listIterator()	It returns a list iterator over the elements of this list.
+8	ListIterator<E> listIterator(int index)	Returns a list iterator over the elements of this list starting from the specified index.
+9	List<E> subList(int fromIndex, int toIndex)	Returns sub list of this list starting from ‘fromIndex’ to ‘toIndex’.
+
+
+Advantages Of Using ArrayList Over Arrays
+
+Array and ArrayList are most used data types while developing any java applications. Both are used to store group of objects. In this post I have tried to list down the advantages of using ArrayList over Arrays. Before discussing the advantages of ArrayList, let’s see what are the drawbacks of arrays.
+
+Arrays are of fixed length. You can not change the size of the arrays once they are created.
+You can not accommodate an extra element in an array after they are created.
+Memory is allocated to an array during it’s creation only, much before the actual elements are added to it.
+Because of these drawbacks, use of arrays are less preferred. Instead of arrays, you can use ArrayList class which addresses all these drawbacks. Here are some advantages of using ArrayList over arrays.
+
+1) You can define ArrayList as re-sizable array. Size of the ArrayList is not fixed. ArrayList can grow and shrink dynamically.
+
+class ArrayListDemo
+{
+    public static void main(String[] args)
+    {
+        ArrayList<String> list = new ArrayList<String>();
+ 
+        list.add("ONE");
+ 
+        list.add("TWO");
+ 
+        list.add("THREE");
+ 
+        System.out.println(list.size());     //Output : 3
+ 
+        //Inserting some more elements
+        list.add("FOUR");
+ 
+        list.add("FIVE");
+ 
+        System.out.println(list.size());    //Output : 5
+ 
+        //Removing an element
+        list.remove("TWO");
+ 
+        System.out.println(list.size());    //Output : 4
+    }
+}
+
+2) Elements can be inserted at or deleted from a particular position.
+
+class ArrayListDemo
+{
+    public static void main(String[] args)
+    {
+        ArrayList<String> list = new ArrayList<String>();
+ 
+        list.add("ZERO");
+ 
+        list.add("TWO");
+ 
+        list.add("FOUR");
+ 
+        System.out.println(list);     //Output : [ZERO, TWO, FOUR]
+ 
+        list.add(2, "THREE");       //Inserting an element at index 2
+ 
+        list.add(1, "ONE");     //Inserting an element at index 1
+ 
+        System.out.println(list);    //Output : [ZERO, ONE, TWO, THREE, FOUR]
+ 
+        list.remove(3);       //Removing an element from index 3
+ 
+        System.out.println(list);    //Output : [ZERO, ONE, TWO, FOUR]
+    }
+}
+3) ArrayList class has many methods to manipulate the stored objects.
+
+ArrayList class has methods to perform solo modifications ( add(), remove()… ), bulk modifications ( addAll(), removeAll(), retainAll()… ), searching( indexOf(), lasIndexOf() ) and iterations( iterator() ).
+
+4) If generics are not used, ArrayList can hold any type of objects.
+
+class ArrayListDemo
+{
+    public static void main(String[] args)
+    {
+        ArrayList list = new ArrayList();     //ArrayList without generics
+ 
+        list.add("ZERO");    //adding string type object
+ 
+        list.add(1);        //adding primitive int type
+ 
+        list.add(20.24);    //adding primitive double type
+ 
+        list.add(new Float(23.56));   //Adding Float wrapper type object
+ 
+        list.add(new Long(25));      //Adding Long wrapper type object
+ 
+        System.out.println(list);     //Output : [ZERO, 1, 20.24, 23.56, 25]
+    }
+}
+5) Many are of the assumption that multiple insertion and removal operations on ArrayList will decrease the performance of an application. But, there will be no significant change in the performance of an application if you use ArrayList instead of arrays. Below example shows time taken to add 1000 string elements to ArrayList and array.
+
+class ArrayListDemo
+{
+    public static void main(String[] args)
+    {
+        String[] namesArray = new String[1000];
+ 
+        long startTime = System.currentTimeMillis();
+ 
+        for (int i = 0; i < namesArray.length; i++)
+        {
+            namesArray[i] = "Name"+i;
+        }
+ 
+        long endTime = System.currentTimeMillis();          
+ 
+        System.out.println("Time taken by Array : "+(endTime - startTime)+"ms");
+ 
+        ArrayList<String> nameList = new ArrayList<String>();     
+ 
+        startTime = System.currentTimeMillis();
+ 
+        for (int i = 0; i <= 1000; i++)
+        {
+            nameList.add("Name"+i);
+        }
+ 
+        endTime = System.currentTimeMillis();
+ 
+        System.out.println("Time taken by ArrayList : "+(endTime-startTime)+"ms");
+    }
+}
+
+
+6) You can traverse an ArrayList in both the directions – forward and backward using ListIterator.
+
+class ArrayListDemo
+{
+    public static void main(String[] args)
+    {    
+        ArrayList<String> list = new ArrayList<String>();
+         
+        list.add("ONE");
+         
+        list.add("TWO");
+         
+        list.add("THREE");
+         
+        list.add("FOUR");
+         
+        ListIterator iterator = list.listIterator();
+         
+        System.out.println("Elements in forward direction");
+         
+        while (iterator.hasNext())
+        {
+            System.out.println(iterator.next());
+        }
+         
+        System.out.println("Elements in backward direction");
+         
+        while (iterator.hasPrevious())
+        {
+            System.out.println(iterator.previous());
+        }
+    }
+}
+
+7) ArrayList can hold multiple null elements.
+
+
+class ArrayListDemo
+{
+    public static void main(String[] args)
+    {
+        ArrayList<Integer> list = new ArrayList<Integer>();     
+ 
+        list.add(100);
+ 
+        list.add(null);
+ 
+        list.add(null);
+ 
+        System.out.println(list);     //Output : [100, null, null]
+    }
+}
+
+8) ArrayList can hold duplicate elements.
+
+
+class ArrayListDemo
+{
+    public static void main(String[] args)
+    {
+        ArrayList<Integer> list = new ArrayList<Integer>();     
+ 
+        list.add(100);
+ 
+        list.add(100);
+ 
+        list.add(100);
+ 
+        System.out.println(list);     //Output : [100, 100, 100]
+    }
+}
+(Above two advantages(7 and 8) are also applicable to arrays. But, you can treat them as bonus with all above advantages of ArrayList.)
+
+
+
+
+
+

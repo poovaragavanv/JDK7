@@ -1,0 +1,62 @@
+Streams => It defined as the sequence of data elements that is made available over time. It represents a Source( which generates the data in the form of Stream) and a destination( which consumes or read data available as Stream). In other simple words it is a flow of data from which you can read or write data to it.
+	
+Byte = InputStream (Read()) -> It reads One byte at a time, OutputStream(Write() - 8 bit(Java1.0 )
+Character(Unicode) = Reader, Writer - 16 bit (Java1.1 )
+Character Stream better to Byte Stream because char supports internationlization.
+
+
+
+To Read Dynamic Inuput / User Input Use BufferedReader
+Standard input => keyboard
+Standard Output => Console
+Class named System.in(Object of Input Stream)
+Keyboard to InputStream
+
+System Class Three Varaibles
+1.System.err 
+2.System.out -> Staic printStream out = stream obj connected to console
+3.System.in -> Static InputStream in = stream obj conncected to keyboard
+
+InputStreamReader ir  = new InputStreamReader(System.in);
+BufferedReader br = new BufferedReader(ir);
+IO - System.in(Represents keyboard take input from InputStreamReader)->InputStreamReader(Byte to Char transfer send data to Buffered) - > BufferedReader(Wrap / Improve performanceget methods easily access)
+Methods : close(), read(), read(char[], buffer, int off, int len), readLine()
+
+
+Choose Correct Input Format ask to you self:
+
+1.What is your format
+2.Do you want random access
+3.Are you using Objects or non - objects
+4.Source and sinks of data(like Sockets, Files, Strings or array of charcters)
+5. Filetering techniques buffering, checksum like
+
+
+ByteStream Abstract Classes ( Deal with Bytes)
+
+InputStream - Byte Reader ( read(), Skip(), mark(), reset(), close()
+OutputStream - Byte Writer(Write(), flush(), close())
+
+CharStream Abstract Classes (Deal with Char)
+
+Reader - Character Reader ( read(), Skip(), mark(), reset(), close()
+Writer - Character Writer(Write(), flush(), close())
+
+
+SubClasses of Byte
+1. FileInputStream
+2. FileOutputStream
+3. BufferedInputStream
+4. BufferedOutputStream
+5. PrintStream
+SubClasses of Char Based
+1. FileReader
+2. FileWriter
+3. BufferedReader
+4. BufferedWriter
+5. PrintWriter
+
+Applying Decorator Pattern
+
+Read EachLine form file
+BufferedReader->InputStreamReader->FileInputStreamReader

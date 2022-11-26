@@ -1,0 +1,139 @@
+public class EnumExample {
+ 
+	public enum Company {
+		EBAY(30), PAYPAL(10), GOOGLE(15), YAHOO(20), ATT(25);
+		private int value;
+ 
+		private Company(int value) {
+			this.value = value;
+		}
+	}
+ 
+	public static void main(String[] args) {
+		for (Company cName : Company.values()) {
+System.out.println("Company Value: " + cName.value + " - Company Name: " + cName);
+		}
+	}
+}
+
+Some very important points on Java Enum:
+
+Point-1
+
+All enums implicitly extend java.lang.Enum. 
+Since Java does not support multiple inheritance, 
+an enum cannot extend anything else.
+
+Point-2
+
+Enum in Java are type-safe: Enum has there own name-space. 
+It means your enum will have a type for example “Company” in below example 
+and you can not assign any value other than specified in Enum Constants.
+
+Java
+	public enum Company {
+		EBAY, PAYPAL, GOOGLE, YAHOO, ATT
+	}
+ 
+	Company cName = Company.EBAY;
+	cName = 1;   // Compilation Error
+Point-3
+
+You can specify values of enum constants at the creation time. 
+MyEnum.values() returns an array of MyEnum’s values.
+
+
+ 
+public class EnumExample {
+ 
+	public enum Company {
+		EBAY(30), PAYPAL(10), GOOGLE(15), YAHOO(20), ATT(25);
+		private int value;
+ 
+		private Company(int value) {
+			this.value = value;
+		}
+	}
+ 
+	public static void main(String[] args) {
+		for (Company cName : Company.values()) {
+			System.out.println("Company Value: " + cName.value + " - Company Name: " + cName);
+		}
+	}
+}
+Output:
+
+Company Value: 30 - Company Name: EBAY
+Company Value: 10 - Company Name: PAYPAL
+Company Value: 15 - Company Name: GOOGLE
+Company Value: 20 - Company Name: YAHOO
+Company Value: 25 - Company Name: ATT
+Point-4
+
+Enum constants are implicitly static and 
+final and can not be changed once created.
+
+Point-5
+
+Enum can be safely compare using:
+
+Switch-Case Statement
+== Operator
+.equals() method
+Java
+Company eBay = Company.EBAY;
+if(eBay == Company.EBAY){
+  log.info("enum in java can be compared using ==");
+}
+
+\
+Point-6
+
+You can not create instance of enums by using new operator in Java because 
+constructor of Enum in Java can only be private and Enums constants can only be 
+created inside Enums itself.
+
+Point-7
+
+Instance of Enum in Java is created when any Enum constants are 
+first called or referenced in code.
+
+Point-8
+
+An enum specifies a list of constant values assigned to a type.
+
+Point-9
+
+An enum can be declared outside or inside a class, but NOT in a method.
+
+Point-10
+
+An enum declared outside a class must NOT be marked static, final , abstract,
+ protected , or private
+
+Point-11
+
+Enums can contain constructors, methods, variables, and constant class bodies.
+
+Point-12
+
+enum constants can send arguments to the enum constructor, 
+using the syntax BIG(8), where the int literal 8 is passed to the enum constructor.
+
+Point-13
+
+enum constructors can have arguments, and can be overloaded.
+
+Point-14
+
+enum constructors can NEVER be invoked directly in code. 
+They are always called automatically when an enum is initialized.
+
+Point-15
+
+The semicolon at the end of an enum declaration is optional.
+
+These are legal:
+
+enum Foo { ONE, TWO, THREE};
+enum Foo { ONE, TWO, THREE};

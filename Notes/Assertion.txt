@@ -1,0 +1,43 @@
+Syntax of assert statement
+#Syntax of an assert statement is as follow (short version):
+	
+	assert expression1;
+
+ or (full version):
+	
+	assert expression1 : expression2;
+
+ 
+#Where:
+expression1 must be a boolean expression.
+expression2 must return a value (must not return void).
+
+The assert statement is working as follows:
+
+If assertion is enabled, then the assert statement will be evaluated. Otherwise, it does not get executed.
+If expression1 is evaluated to false, an AssertionError error is thrown which causes the program stops immediately. And depending on existence of expression2:
+If expression2 does not exist, then the AssertionError is thrown with no detail error message.
+If expression2 does exist, then a String representation of expression2’s return value is used as detail error message.
+If expression1 is evaluate to true, then the program continues normally.
+ 
+Enable assertion
+By default, assertion is disabled at runtime. To enable assertion, specify the switch –enableassertions or -ea at command line of java program. 
+
+Ex
+
+public class AssertionExample {
+    public static void main(String[] args) {
+        // get a number in the first argument
+        int number = Integer.parseInt(args[0]);
+ 
+        assert number <= 10; // stops if number > 10
+ 
+        System.out.println("Pass");
+ 
+    }
+}
+
+
+ 
+or this for short:
+java –ea CarManager

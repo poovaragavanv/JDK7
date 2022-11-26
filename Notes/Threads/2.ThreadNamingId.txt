@@ -1,0 +1,54 @@
+# What's in a Threadname?
+
+Java associates a name with a thread. That name defaults to Thread, a hyphen character, and a zero-based integer number. You can accept Java's default thread names or you can choose your own. 
+To accommodate custom names, Thread provides constructors that take name arguments and a 
+=>	setName(String name) method. Thread also provides a 
+=>	getName() method that returns the current name. 
+
+# Idetify Thread using Id:
+
+	JVM assigns one unique long number for every thread created. This remains unchanged for the whole life 	term of a thread. This number can be used to identify a thread.
+
+		public long getID(); // Thread ID is a unique positive long number. 	
+	// we can’t assign our own ID to the thread. But, we can change the way getID() returns the 			thread ID as it is not a final method.
+
+# Prioroity of Threads
+
+	public final void setPriority(int newPriority)  —> Changes the priority of a thread to newPriority.
+	public final int getPriority()  —>  Returns the priority of a thread.
+
+	MIN_PRIORITY   —> It defines the lowest priority that a thread can have and It’s value is 1.
+	NORM_PRIORITY  —> It defines the normal priority that a thread can have and it’s value is 5.
+	MAX_PRIORITY  —> It defines the highest priority that a thread can have and it’s value is 10.
+
+	Priority Exceptions :  
+	IllegelArgumentException, SecurityException
+
+#ThreadSleep
+
+	Sleep() method causes the current thread to suspend the execution for a specified period.
+
+	Public static void sleep(long ms) throws  InterruptedException
+	Public static void sleep (long ms,int ns)throws  InterruptedException
+	
+=>	Here a very important point to note that is whenever we are using sleep() method compulsory we should 	handle InterruptedException otherwise we will get compiletime Error.
+=>	When the thread is going for sleep, it does not release the synchronized locks it holds.
+
+#JoinThread
+
+join() method of java.lang.Thread class is used to mantain the order of execution of threads.
+
+There are three forms of join() method available in Thread class.
+
+	public final void join() throws InterruptedException 
+	—> Currently executing thread waits for a thread to finish it’s task on which it is called.
+	
+	public final void join(long millis) throws InterruptedException
+	—> currently executing thread waits at most millis milliseconds for a thread to finish it’s task on 	which it is called.
+
+	public final void join(long millis, int nanos) throws InterruptedException
+	—> Currently executing thread waits at most millis milliseconds plus nanos nanoseconds for a thread to 	finish it’s task on which it is called.
+
+
+
+	

@@ -1,0 +1,26 @@
+In order to make a connection to a specific database system, it requires doing the following 2 steps:
+          Load appropriate JDBC driver class using Class.forName() statement.
+          Establish a connection using DriverManager.getConnection() statement.
+
+method which allow us to establish a connection to a database in three different ways:
+
+Method1:
+
+	static Connection getConnection(String url) :
+Establishes a connection from the given database URL in the form of: jdbc:subprotocol:subname
+
+Method2:
+
+	static Connection getConnection(String url, Properties info) :
+Establishes a connection from the given database URL and a Properties object which includes additional information such as user and password.
+
+Method3:
+
+	static Connection getConnection(String url, String user, String password):
+Establishes a connection from the given database URL, user and password.        
+
+As you notice, all methods require a database URL which is a string in a special format that contains information about the database to connect to, such as server name, database name, user, password… Database URL is specific to a particular database system. Following is an example of a database URL for 
+MySQL:
+	jdbc:mysql://localhost:3306/test
+
+where localhost is server name, 3306 is port number, and test is database name.

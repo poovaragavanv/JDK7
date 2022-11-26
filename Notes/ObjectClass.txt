@@ -1,0 +1,13 @@
+Give the list of Java Object class methods.
+
+1.clone() - Creates and returns a copy of this object.
+2.equals() - Indicates whether some other object is "equal to" this one
+3.finalize() - Called by the garbage collector on an object when garbage collection
+			determines that there are no more references to the object.
+4.getClass() - Returns the runtime class of an object.
+5.hashCode() - Returns a hash code value for the object.	
+6.notify() - Wakes up a single thread that is waiting on this object's monitor.
+7.notifyAll() - Wakes up all threads that are waiting on this object's monitor.
+8.toString() - Returns a string representation of the object.
+9.wait() - Causes current thread to wait until another thread invokes the notify() method
+			or the notifyAll() method for this object.

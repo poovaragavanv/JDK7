@@ -1,0 +1,108 @@
+2.1  Iterable<E> Interface
+
+The Iterable<E> interface, which takes a generic type E and read as Iterable of element of type E, declares one abstract method called iterator() to retrieve the Iterator<E> object associated with all the collections. This Iterator object can then be used to transverse through all the elements of the associated collection.
+
+Iterator<E> iterator();   // Returns the associated Iterator instance 
+                          // that can be used to transverse thru all the elements of the collection
+
+All implementations of the collection (e.g., ArrayList, LinkedList, Vector) must implement this method, which returns an object that implements Iterator interface.
+
+2.2  Iterator<E> Interface
+
+The Iterator<E> interface, declares the following three abstract methods:
+
+boolean hasNext()  // Returns true if it has more elements
+E next()           // Returns the next element of generic type E
+void remove()      // Removes the last element returned by the iterator
+As seen in the introductory example, you can use a while-loop to iterate through the elements with the Iterator as follows:
+List<String> lst = new ArrayList<String>();
+lst.add("alpha");
+lst.add("beta");
+lst.add("charlie");
+ 
+// Retrieve the Iterator associated with this List via the iterator() method
+Iterator<String> iter = lst.iterator();
+// Transverse thru this List via the Iterator
+while (iter.hasNext()) {
+   // Retrieve each element and process
+   String str = iter.next();
+   System.out.println(str);
+}
+
+2.3  Enhanced for-loop (JDK 1.5)
+
+The syntax is as follows (read as for each element in the collection):
+
+for ( type item : aCollection ) {
+   body ;
+}
+
+Example - Using Enhanced for-loop on Collection of "Mutable" Objects (such as StringBuilder)
+
+import java.util.List;
+import java.util.ArrayList;
+ 
+public class ForEachMutableTest {
+   public static void main(String[] args) {
+      List<StringBuilder> lst = new ArrayList<StringBuilder>();
+      lst.add(new StringBuilder("alpha"));
+      lst.add(new StringBuilder("beta"));
+      lst.add(new StringBuilder("charlie"));
+      System.out.println(lst);   // [alpha, beta, charlie]
+ 
+      for (StringBuilder sb : lst) {
+         sb.append("88");   // can modify "mutable" objects
+      }
+      System.out.println(lst);  // [alpha88, beta88, charlie88]
+   }
+}
+
+Example - Using Enhanced for-loop on Collection of "Immutable" Objects (such as String)
+
+import java.util.List;
+import java.util.ArrayList;
+ 
+public class ForEachImmutableTest {
+   public static void main(String[] args) {
+      List<String> lst = new ArrayList<String>();
+      lst.add("alpha");
+      lst.add("beta");
+      lst.add("charlie");
+      System.out.println(lst);   // [alpha, beta, charlie]
+ 
+      for (String str : lst) {
+         str += "change!";   // cannot modify "immutable" objects
+      }
+      System.out.println(lst);   // [alpha, beta, charlie]
+   }
+}
+
+2.4  Collection<E> Interface
+
+The Collection<E>, which takes a generic type E and read as Collection of element of type E, is the root interface of the Collection Framework. It defines the common behaviors expected of all classes, such as how to add or remove an element, via the following abstract methods:
+
+// Basic Operations
+int size()                        // Returns the number of elements of this Collection
+void clear()                      // Removes all the elements of this Collection
+boolean isEmpty()                 // Returns true if there is no element in this Collection
+boolean add(E element)            // Ensures that this Collection contains the given element
+boolean remove(Object element)    // Removes the given element, if present
+boolean contains(Object element)  // Returns true if this Collection contains the given element
+
+// Bulk Operations with another Collection
+boolean containsAll(Collection<?> c)       // Collection of any "unknown" object
+boolean addAll(Collection<? extends E> c)  // Collection of E or its sub-types
+boolean removeAll(Collection<?> c)
+boolean retainAll(Collection<?> c)
+ 
+// Comparison - Objects that are equal shall have the same hashCode
+boolean equals(Object o)
+int hashCode()
+ 
+// Array Operations
+
+Object[] toArray()       // Convert to an Object array
+<T> T[] toArray(T[] a)   // Convert to an array of the given type T
+
+Collection of Primitives?
+A Collection<E> can only contain objects, not primitive values (such as int or double). Primitive values are to be wrapped into objects (via the respective wrapper classes such as Integer and Double). JDK 1.5 introduces auto-boxing and auto-unboxing to simplify the wrapping and unwrapping processes. Read "Auto-Boxing and Auto-Unboxing" section for example.

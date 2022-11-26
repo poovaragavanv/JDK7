@@ -1,0 +1,32 @@
+Thread Objects
+
+Each thread is associated with an instance of the class Thread. There are two basic strategies for using Thread objects to create a concurrent application.
+
+1.To directly control thread creation and management, simply instantiate Thread each time the application needs to initiate an asynchronous task.
+2.To abstract thread management from the rest of your application, pass the application's tasks to an executor.
+Constructing threads
+
+Thread has eight constructors. The simplest are:
+
+Thread()
+Thread(String name),
+Thread(Runnable target)
+Thread(Runnable target, String name)
+
+One of the final four constructors, 
+
+Thread(ThreadGroup group, Runnable target, String name, long stackSize)
+
+Thread Excution(Refer Diagram 2.Thread):
+
+The chart shows several significant time periods:
+
+The starting thread's initialization
+The moment that thread begins to execute main()
+The moment that thread begins to execute start()
+The moment start() creates a new thread and returns to main()
+The new thread's initialization
+The moment the new thread begins to execute run()
+The different moments each thread terminates
+Note that the new thread's initialization, its execution of run(), and its termination happen simultaneously with the starting thread's execution. Also note that after a thread calls start(), subsequent calls to that method before the run() method exits cause start() to throw a java.lang.IllegalThreadStateException object.
+

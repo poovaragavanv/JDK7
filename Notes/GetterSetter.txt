@@ -1,0 +1,32 @@
+Setter and getter methods:
+
+
+If we want to access variables inside a class we can access them using object. object.variable_name; and if we want to change the value of variable we will assign using object.variable_name=value; By using constructor we can assign some values to the class variables whenever object is created but this is one time initialization.
+
+1.To assign some value to variable directly assigning value or get value of variable using object   is not recommended. 
+2.Actually we need to use methods to perform any task. And to assign and to get values of a object we have setter and getter methods concept in java.
+3.Getter and setter methods are like normal methods in java. but to initialize new value and get the value of instance variables we will use use these methods that is the reason behind specialty of these methods
+4.We can set as well as get value from variables so these are called setter and getter methods.
+5.so declare variables as private to prevent from accessing directly using object of the class. and use get and set methods in java like setXXX() and getXXX  to assign values and access variables . SetXXX() and getXXX() here set and get are naming conventions to be used. where as XXX represent variable names.If we observe this it is pure encapsulation in java.
+
+
+Set Method  /  Setter method in java:
+
+Purpose of Setter method is to set new value or assign new value to instance variable .
+Method name should follow naming convention setVARIABLENAME().
+It should accept some value as an argument. here method argument should be of type of variable.
+It should have a statement to assign argument value to corresponding variable.
+It does not have any return type. void should be the method return type.
+In order to set some value to variable we need to call corresponding setter method  by passing required value.
+
+
+
+Get method / Getter  method in java:
+
+Purpose of Getter method is to get the value of the instance variable.
+
+Method name should follow naming convention getVARIABLENAME().
+It should not have any arguments.
+It should return corresponding variable value.
+So return type must be of type of variable we are returning from the method.
+In order to get the variable value we need to call corresponding getter method of variable.

@@ -1,0 +1,125 @@
+# EXAMPLE – WRITING DATA TO FILE USING DATAOUTPUTSTREAM
+/**
+Data Streams are used to perform binary input output operations of all the primitive data types in Java including Strings i.e. if you want to perform i/o operations for boolean, char, byte, short, int, long, float, double or Strings then data streams provide a very convenient and an efficient way for that. This allows you to read-write Java primitives instead of raw bytes
+*/
+
+import java.io.*;
+ 
+public class DataOutputStreamExample {
+ 
+    static final double[] price = { 15.43, 10.12, 50.8, 249.56, 18.99 };
+    static final int[] qty = { 10, 23, 45, 14, 2 };
+    static final String[] items = { "keyboard", "mouse", "core java ebook",
+            "ups", "pen drive", };
+ 
+    public static void main(String[] args) {
+ 
+        /**
+         * Use try with resources or don't forget to close the stream( because
+         * we use BufferedStream here).
+         */
+        try (
+                // Create File output Stream. data.txt should be in classpath or provide fully qualified path
+                OutputStream os = new FileOutputStream("data.txt");
+                 
+                // Create Buffered stream. You can skip this step also
+                BufferedOutputStream bos = new BufferedOutputStream(os);
+                 
+                // create data output stream
+                DataOutputStream out = new DataOutputStream(bos)
+            ) {
+             
+            // stuffing item name, quantity, price one by one in output stream
+            for (int i = 0; i < price.length; i++) {
+                out.writeUTF(items[i]);
+                out.writeInt(qty[i]);
+                out.writeDouble(price[i]);
+            }
+             
+            System.out.println("Data successfully written to a file");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
+# EXAMPLE – READING DATA FROM A FILE USING DATAINPUTSTREAM
+
+import java.io.*;
+ 
+public class DataInputStreamExample {
+ 
+    public static void main(String[] args) {
+        double price;
+        int quantity;
+        String item;
+ 
+        try (
+                // create input stream. Same rules applies to file name again
+                InputStream is = new FileInputStream("data.txt");
+ 
+                // create buffered input stream. you can skip this.
+                BufferedInputStream bis = new BufferedInputStream(is);
+ 
+                // create data input stream to read data in form of primitives.
+                DataInputStream in = new DataInputStream(bis);) {
+ 
+            System.out.println("Selected items are");
+ 
+            /**
+             * Reading whole data from the file. Remember to read it in the same
+             * order in which it was stored i.e. if integer is stored first then
+             * readInt() method should be invoked first otherwise unexpected
+             * error or output will be there.
+             */
+            while (in.available() > 0) {
+                item = in.readUTF();
+                quantity = in.readInt();
+                price = in.readDouble();
+                 
+                System.out.format("%-20s  %-10d  $%.2f%n", item, quantity,
+                        price);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
+# FILE READING AND WRITING EXAMPLE USING BYTE STREAMS
+
+To show you the use of Byte Streams here in this example I will take image as an input file so that it could be clear that Byte Streams can be used for all types of files( except Strings or text files) but ensure that the file is in classpath or provide a fully qualified pathname of the file.
+Also we are using Java 7 feature named try with resources in which we are declaring and Initializing both the Streams along with try and we don’t need to close them explicitly but ensure that every resource you initialize inside try should implement AutoClosable interface.
+ 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+ 
+public class ByteStreamsExample {
+    public static void main(String[] args) throws IOException {
+ 
+        try (
+        // Declaring and initializing both the Streams inside try so that there
+        // is no need to close them. You can do this with many other classes but
+        // make sure that they all implements the Closable Interface
+                InputStream inputStream = new FileInputStream("input.jpg");
+                OutputStream outputStream = new FileOutputStream("output.jpg")
+                ) {
+            Integer c;
+             
+            //continue reading till the end of the file
+            while ((c = inputStream.read()) != -1) {
+             
+                //writes to the output Stream
+                outputStream.write(c);
+            }
+        }
+    }
+}
+-> this is a low level operation and it should be avoided if you can because this program spends a lot of time in looping i.e reading from input stream and writing to output stream and these operations are really costly.

@@ -1,0 +1,15 @@
+Method Overloading Rules
+
+1.To call an overloaded method in Java, it is must to use the type and/or number of arguments to determine which version of the overloaded method to actually call.
+2.The overloaded methods may have varied return types and the return type single-handedly is insufficient to make out two versions of a method.
+3.As and when Java compiler encounters a call to an overloaded method, it simply executes the version of the method whose parameters match the arguments used in the call.
+4.It permits the user to obtain compile time polymorphism with name method name.
+5.An overloaded method is able to throw different kinds of exceptions.
+6.A method which is overloaded can contain different access modifiers.
+
+Method Overriding Rules
+
+1.Argument list: The argument list at the time of overriding method need to be same as that of the method of parent class. The data types of the arguments along with their sequence must have to be preserved as it is in the overriding method.
+2.Access Modifier: The Access Modifier present in the overriding method (method of subclass) cannot be more restrictive than that of overridden method of parent class.
+3.The private, static and final methods can’t be overridden as they are local to the class.
+4.Any method which is overriding is able to throw any unchecked exceptions, in spite of whether the overridden method usually method of parent class might throw any exception or not.

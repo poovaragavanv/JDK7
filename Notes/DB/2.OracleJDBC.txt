@@ -1,0 +1,167 @@
+Connect to Oracle database via JDBC
+
+ 
+1.    Download JDBC driver library for Oracle database
+Click here to visit Oracle’s JDBC driver download page:
+ 
+Select the JDBC driver version that matches Oracle database engine installed on your computer. Here we select Oracle Database 11g Release 2 (11.2.0.3) which brings us to the jar download page.
+ 
+As you can see, there are several jar files which may cause confusion. However, the main jar file is ojdbc5.jar (for Java 5 or later) or ojdbc6.jar (for Java 6 or later). Here we select the version for Java 6. Remember to select Accept License Agreement at the top, and click on the link ojdbc6.jar to download.
+NOTE: Oracle requires users to have an Oracle account for downloading, so you may have to register an account if you don’t have one.
+Place the ojdbc6.jar file under your project’s classpath as usual as using any jar file.
+
+2.    JDBC database URL for Oracle database
+
+The syntax of database URL for Oracle database is as follows:
+	jdbc:oracle:<drivertype>:@<database>
+	jdbc:oracle:<drivertype>:<user>/<password>@<database>
+Where:
+	•drivertype can be thin, oci or kprb.
+	•database can be in the form of hostname:port:SID or a TNSNAMES entry listed in the file tnsnames.ora reside on the client computer. The default port is 1521.
+
+According to Oracle, if your JDBC client and Oracle database server are running on the same machine, you should use the OCI Driver because it is much faster than the Thin Driver (The OCI Driver can use Inter Process Communication – IPC, whereas the Thin Driver can use only network connection).
+For example, if you want to connect user tiger with password scott to an Oracle database with SID productDBthrough default port on host dbHost using the Thin Driver, you can construct the URL as follows:
+
+	String url = “jdbc:oracle:thin:tiger/scott@dbHost:1521:productDB”
+ 
+If using the OCI Driver:
+	String url = “jdbc:oracle:oci:tiger/scott@localhost:1521:productDB”
+	String url = “jdbc:oracle:oci:tiger/scott@dbHost:1521:productDB”
+ 
+If you have a TNSNAMES entry productionDB in the tnsnames.ora file, you can construct the URL as follows:
+String url = “jdbc:oracle:oci:@productionDB”
+ 
+For the Server-Side Thin Driver, use the same URL as the Thin Driver.
+For the Server-Side Internal Driver, use the following URLs:
+	
+	String url = "jdbc:oracle:kprb:"
+	String url = "jdbc:default:connection:"
+ 
+Because in that environment, the driver actually runs within a default session, and the client is always connected so the connection should never be closed.
+
+3.    Register Oracle JDBC driver
+
+	
+	DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
+ 
+or:
+	Class.forName("oracle.jdbc.OracleDriver");
+ 
+NOTE: Since Java 6 (JDBC 4.0), registering the driver explicitly as above becomes optional. As long as we put the ojdbc6.jar file in the classpath, JDBC driver manager can detect and load the driver automatically.
+ 
+4.    Establish connection
+With JDBC, we can establish a database connection by calling the method getConnection() of the DriverManager class. There are three versions of this method:
+
+	static Connection getConnection(String url)
+	static Connection getConnection(String url, Properties info)
+	static Connection getConnection(String url, String user, String password)
+
+So we can have three ways for making a connection as follows:
+
+Using only database URL for everything
+
+In this method, we specify all connection properties in a single URL string, for example:
+
+String dbURL = "jdbc:oracle:thin:tiger/scott@localhost:1521:productDB";
+Connection conn = DriverManager.getConnection(dbURL);
+if (conn != null) {
+    System.out.println("Connected");
+}
+ 
+That uses the Thin Driver to connect the user tiger with password scott to the database SID productDB running on the same machine through the default port 1521.
+
+Using database URL, username and password
+
+In this method, we pass the username and password as additional arguments to the method getConnetion(), for example:
+
+String dbURL = "jdbc:oracle:thin:@localhost:1521:productDB";
+String username = "tiger";
+String password = "scott";
+Connection conn = DriverManager.getConnection(dbURL, username, password);
+ 
+Using database URL and Properties object
+
+In this method, we use a java.util.Properties object to hold username, password and other additional properties. For example:
+
+String dbURL = "jdbc:oracle:oci:@ProductDB";
+Properties properties = new Properties();
+properties.put("user", "scott");
+properties.put("password", "tiger");
+properties.put("defaultRowPrefetch", "20");
+ 
+Connection conn = DriverManager.getConnection(dbURL, properties);
+ 
+In this example, we are using the OCI Driver with a TNSNAMES entry ProductDB, and specifying an additional property defaultRowPrefetch which is the number of rows to prefetch from the server.
+
+5.    Example program
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Properties;
+ 
+/**
+ * This program demonstrates how to make database connection with Oracle database server.
+ */
+public class JdbcOracleConnection {
+ 
+    public static void main(String[] args) {
+ 
+        Connection conn1 = null;
+        Connection conn2 = null;
+        Connection conn3 = null;
+ 
+        try {
+            // registers Oracle JDBC driver - though this is no longer required
+            // since JDBC 4.0, but added here for backward compatibility
+            Class.forName("oracle.jdbc.OracleDriver");
+ 
+            // METHOD #1
+            String dbURL1 = "jdbc:oracle:thin:tiger/scott@localhost:1521:productDB";
+            conn1 = DriverManager.getConnection(dbURL1);
+            if (conn1 != null) {
+                System.out.println("Connected with connection #1");
+            }
+ 
+            // METHOD #2
+            String dbURL2 = "jdbc:oracle:thin:@localhost:1521:productDB";
+            String username = "tiger";
+            String password = "scott";
+            conn2 = DriverManager.getConnection(dbURL2, username, password);
+            if (conn2 != null) {
+                System.out.println("Connected with connection #2");
+            }
+ 
+            // METHOD #3
+            String dbURL3 = "jdbc:oracle:oci:@ProductDB";
+            Properties properties = new Properties();
+            properties.put("user", "tiger");
+            properties.put("password", "scott");
+            properties.put("defaultRowPrefetch", "20");
+            conn3 = DriverManager.getConnection(dbURL3, properties);
+ 
+            if (conn3 != null) {
+                System.out.println("Connected with connection #3");
+            }
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                if (conn1 != null && !conn1.isClosed()) {
+                    conn1.close();
+                }
+                if (conn2 != null && !conn2.isClosed()) {
+                    conn2.close();
+                }
+                if (conn3 != null && !conn3.isClosed()) {
+                    conn3.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+}
+ 

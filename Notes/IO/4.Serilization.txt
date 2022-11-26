@@ -1,0 +1,306 @@
+SERIALIZATION AND DESERIALIZATION
+
+To implement Serlilizable Contents of files are binary Format
+
+In the process of Serialization below three are stored in form of bytes:
+	Object’s Data, Type of Object, Type of Data stored in Object.
+Its time for retrieving the stored values and restoring the objects old state( known as Deserialization).
+
+
+# EXAMPLE OF SERIALIZABLE INTERFACE
+
+This serialization and deserialization helps us in many scenarios like gaming, session state management etc.
+
+Have you ever wondered how a game starts from the same point where we have left it? Then this is your answer. All this is done by saving the current state of the object(or game) and reloading the state so that the player could continue from the old state only. Also the checkpoint system in games follow this method by permanently saving the progress up to that state for later use.
+
+Serialization-deserialization in Java - Object Streams
+Serialization-deserialization in Java – Object Streams
+
+# MARKER INTERFACE
+
+An interface in Java without any field and method is a Marker interface. It is used to inform compiler that the class implementing it has some special behavior or meaning. Some of the Marker interfaces are-
+
+java.io.Serializable
+java.rmi.Remote
+java.util.RandomAccess
+java.lang.Cloneable
+
+Although since Java 5 marker interfaces are replaced by annotations and they serve the same purpose as marker interfaces did before but for serializability we still use the interfaces and the transient keyword.
+
+# INTERFACES
+
+Every Object Stream class implements either of the two interfaces-
+
+OBJECTINPUT – SUBINTERFACE OF DATAINPUT
+OBJECTOUTPUT – SUBINTERFACE OF DATAOUTPUT
+
+Note:- Since both the interfaces above are sub interface of interfaces Data streams interfaces, That means that all the primitive data I/O methods covered in Data Streams are also implemented in object streams.
+
+# CLASSES FOR OBJECT STREAMS
+
+Two classes that are used for Object Streams are –
+
+OBJECTINPUTSTREAM
+
+This Java class is responsible for deserializing the previously serialized objects and the primitive data.
+It reads the object from the graph of objects stored while using FileInputStream.
+Method readObject() is the main method used to deserialize the object.The class of the object, the signature of the class, and the values of the non-transient and non-static fields of the class and all of its super types are read. public final Object readObject() throws IOException,ClassNotFoundException
+
+OBJECTOUTPUTSTREAM
+
+This Java class is used to store primitives and a graph of Java object which are available to ObjectInputStream to read data from.This does not care about saving the super class and sub class data but it could be achieved by using the writeObject method or by using the methods for primitive data types supported by DataOutput.
+Method writeObject() is a main method of this Java class which serializes the object directly.
+public final void writeObject(Object obj) throws IOException
+
+# TRANSIENT KEYWORD
+
+There are scenarios in which we want to store only a part of the object i.e. we want to omit some specific fields from the stored object just like password field from any user class or an Employee or you can think of any other sensitive information.
+
+In these cases we mark these fields as transient and this keyword protects the field from being saved during the process of serialization.
+
+Example – transient private String password;
+
+ 
+# SERIALIZATION AND DESERIALIZATION EXAMPLE
+
+Now lets take an example and see how to do this using actual Java coding and have a look at some key points that should be remembered while using Serializable interface.
+
+USER.JAVA
+
+package com.workout.io.serialization;
+ 
+import java.io.Serializable;
+ 
+public class User implements Serializable {
+ 
+    /**
+     * Generated Serial version Id
+     */
+    private static final long serialVersionUID = -55857686305273843L;
+ 
+    private String name;
+    private String username;
+    transient private String password;
+ 
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        String value = "name : " + name + "\nUserName : " + username
+                + "\nPassword : " + password;
+        return value;
+    }
+ 
+    /**
+     * Setters and getters methods.
+     */
+ 
+    public String getName() {
+        return name;
+    }
+ 
+    public void setName(String name) {
+        this.name = name;
+    }
+ 
+    public String getUsername() {
+        return username;
+    }
+ 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+ 
+    public String getPassword() {
+        return password;
+    }
+ 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+}
+
+Make sure that the Java class you need to store must implement Serializable interface.
+Notice that password field in the above class is made transient because it is a sensitive information and we don’t want to store it or you can chose any other field.Also there is another field named serialVersionUID which is a Long variable and it should be defined for all the Java classes because if it is not and if in future we need to perform any changes in the class like variables, methods etc then we would never be able to deserialize an already serialized object.You can try it yourself by first serializing the object and then do some changes in your java class before deserializing it. You will get an error stating the change in SerialVersionUID which is generated automatically by the compiler.
+
+SERIALIZATIONUTIL.JAVA
+package com.workout.io.serialization;
+ 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+ 
+/**
+ * This class is a utility class for performing the serialization and
+ * deserialization operations provided the required information.
+ */
+public class SerializationUtil {
+ 
+    /**
+     * deserialize to Object from given file. We use the general Object so as
+     * that it can work for any Java Class.
+     */
+    public static Object deserialize(String fileName) throws IOException,
+            ClassNotFoundException {
+        FileInputStream fis = new FileInputStream(fileName);
+        BufferedInputStream bis = new BufferedInputStream(fis);
+        ObjectInputStream ois = new ObjectInputStream(bis);
+        Object obj = ois.readObject();
+        ois.close();
+        return obj;
+    }
+ 
+    /**
+     * serialize the given object and save it to given file
+     */
+    public static void serialize(Object obj, String fileName)
+            throws IOException {
+        FileOutputStream fos = new FileOutputStream(fileName);
+        BufferedOutputStream bos = new BufferedOutputStream(fos);
+        ObjectOutputStream oos = new ObjectOutputStream(bos);
+        oos.writeObject(obj);
+        oos.close();
+    }
+}
+In the above Java utility class we have used
+
+File Streams(For file related operations) which are wrapped in
+Buffered Streams(for Speeding up the operations) which are finally wrapped into
+Object Streams(for serialization and deserialization operations).
+
+SERIALIZATIONTEST.JAVA
+package com.workout.io.serialization;
+
+import java.io.IOException;
+ 
+public class SerializationTest {
+ 
+    public static void main(String[] args) {
+        User user = new User();
+        user.setName("ABC");
+        user.setUsername("abc123");
+        user.setPassword("xyz");
+ 
+        try {
+            /**
+             *  Serializing the object
+             */
+            SerializationUtil.serialize(user, "serialization.txt");
+ 
+            /**
+             * Deserializing the object
+             */
+            User newUser = (User) SerializationUtil.deserialize("serialization.txt");
+            System.out.println(newUser.toString());
+ 
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+Output:-
+name : ABC
+UserName : abc123
+Password : null
+
+Notice that the password value is null and it is because we have made it a transient field and hence it was not stored and at the time of deserialization a default value is assigned to this variable( which is obviously null).
+
+# USES
+
+1.To persist data for future use.
+2.To send data to a remote computer using such client/server Java technologies as RMI or socket programming.
+3.To "flatten" an object into array of bytes in memory.
+4.To exchange data between applets and servlets.
+5.To store user session in Web applications.
+6.To activate/passivate enterprise java beans.
+7.To send objects between the servers in a cluster.
+8.You need to define serialVersionUID in case of Serializable and if it is not explicitly defined it will be generated automatically and it is based on all the fields, methods etc of the class and it changes every time you do the changes in the class. You if current id does not match with generated id you will not be able to recover the previously stored data. Since the ID is generated every time it will take considerable amount of time which is not a case with externalizable interface.
+
+
+# CLASS EXAMPLE
+
+student.java
+
+package com.workout.io.serialization2;
+import java.io.Serializable;
+class student implements Serilizable
+{
+	Sting name;
+	double GPA;
+	int transient id;
+	Student(Strig name , double GPA)
+	{
+		this.name = name;
+		this.GPA = GPA;
+	}
+	public string getName()
+	{
+		return this.name;
+	}
+	public string setName
+	{
+		return(this.name = newname);
+	}
+	public double getGPA()
+	{
+		return this.name;
+	}
+	public double setGPA()
+	{
+		return(this.name = newname);
+	}
+	public String toString()
+	{
+		return String.fromat("%s\t%f", this.name, this.GPA);
+	}
+}
+
+DemoSeriliziation.java
+
+package com.workout.io.serialization2;
+class DemoSeriliziation
+{
+public static void main(String args[]) throws fileNotFoundException
+{
+	File file  = new File("Demo1.txt");
+	ArrayList<Student> students = new ArrayList<Students>();
+	students.add(new student("X", 3.92));
+	students.add(new student("Y",4.0));
+
+	// Seriliziation
+	FileOutputStream fo  = new FileOutputStream(File);
+	ObjectOutputStream output = new ObjectOutputStream(fo);
+	for(student s:students)
+	{
+	output.writeobject(S);
+	}
+	
+	// Deserilize
+	FileInputStream fo  = new FileInputStream(File);
+	ObjectInputStream output = new ObjectInputStream(fo);
+	for(student s:students);
+	output.writeobject(S);
+	ArrayList<Student> students = new ArrayList<Students>();
+	try
+	{
+		while(true)
+		{
+		Student s = (Student).readObject();
+		students.add(S);
+		}
+	}
+	catch()
+	{
+	}
+	for(student s:students2);
+	{
+	System.out.println(s);
+	}
+}
+}
+
+

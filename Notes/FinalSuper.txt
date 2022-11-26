@@ -1,0 +1,59 @@
+# final is a keyword or reserved word and can be applied to variables, methods, classes etc. 
+# It is to make entity non modifiable. 
+#It means when you make a variable or class or method as final you are not allowed to change that variable or class or method and compiler will verify this and gives compilation error if you try to re-initialized final variables in java.
+
+# The final keyword in java is used to give restriction to the user. The java final keyword can be used in many contexts. 
+
+Final can be:
+
+variable
+method
+class
+
+# Important Note: The final keyword can be used with the variables and a final variable that have no value is known as blank final variable. It can be initialized or declared in the constructor only. The blank final variable can be static also which means it will be initialized in the static block only.
+
+Important Points to Remember About Final Keyword
+
+1.Constructors cannot be final.
+2.If you make any class as a final then it cannot be inherited that means to stop inheritance make a class final.
+3.If you make any data members as a final then it will become constant that means you cannot change value of this variable throughout the function.
+4.If you make static data member of a class a final then it will become constant that means you cannot change the  value of this variable throughout the class and it has to be initialized at class level.
+5.If you make any non static data member of a class as a final then it will also become constant that means you cannot change the value of variable throughout the class and it has to be initialize at class level.
+6.If you want to make any non static data member as a blank final variable then it has to be initialized via constructor only.
+7.By default all the data members of an interface are final and static also.
+
+
+
+package Notes;
+/*
+
+What is super in Java?
+
+Super is a keyword of Java which refers to the immediate parent of a class and is used inside the sub class method definition for calling a method defined in super class. A super class having methods as private cannot be called. Only the methods which are public and protected can be called by the keyword super. It is also used by class constructors to invoke constructors of its parent class.
+
+Syntax:
+super.<method-name>();
+
+Usage of super class
+
+#Super variables refer to the variable of variable of parent class.
+#Super() invokes the constructor of immediate parent class.
+#Super refers to the method of parent class.
+
+1. Use of super with variables: This scenario occurs when a derived class and base class has same data members. In that case there is a possibility of ambiguity for the JVM. 
+Eg: Super.Variablename;
+
+2. Use of super with methods: This is used when we want to call parent class method. So whenever a parent and child class have same named methods then to resolve ambiguity we use super keyword
+Eg: Super.MethodName();
+
+3.3. Use of super with constructors: super keyword can also be used to access the parent class constructor. One more important thing is that, ‘’super’ can call both parametric as well as non parametric constructors depending upon the situation.
+
+Eg: super(); // Declared Inside of Derived
+
+super and super() look alike, but they are very different in their functionality (purpose).
+
+super with variables and methods: super is used to call super class variables and methods by the subclass object when they are overridden by subclass.
+
+super() with constructors: super() is used to call super class constructor from subclass constructor.
+
+*/

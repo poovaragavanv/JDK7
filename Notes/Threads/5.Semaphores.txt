@@ -1,0 +1,4 @@
+Java multi threads example to show you how to use Semaphore and Mutex to limit the number of threads to access resources.
+
+Semaphores – Restrict the number of threads that can access a resource. Example, limit max 10 connections to access a file simultaneously.
+Mutex – Only one thread to access a resource at once. Example, when a client is accessing a file, no one else should have access the same file at the same time.

@@ -1,0 +1,76 @@
+Features of JDBC 1.0 API
+
+The JDBC 1.0 API was the first officially JDBC API launched consists of the following java classes and interfaces that you can open connections to particular databases.
+
+This version includes a completely redesigned administration console with an enhanced graphical interface to manage and monitor distributed virtual databases.
+
+Features of JDBC 1.2 API
+
+1). It supports Updatabale ResultSets.
+
+2). The DatabaseMetaData code has been refactored to provide more transparency with regard to the underlying database engine.
+
+3) New pass through schedulers for increased performance.
+
+
+Features of The JDBC 2.0 Optional Pacakage API
+
+1). The use of DataSource interface for making a connection.
+
+2). Use of JNDI to specify and obtain database connections.
+
+3). It allows us to use Pooled connections, that is we can reuse the connections.
+
+4). In this version the distrbuted transactions is possible.
+
+5). It provides a way of handling and passing data using Rowset technology.
+
+Features of the JDBC 2.1 core API.
+
+1). Scroll forward and backward in a result set or has the ability to move to a specific row.
+
+2). Instead of using SQL commands, we can make updates to a database tables using methods in the Java programming language
+
+3). We can use multiple SQL statements in a a database as a unit, or batch.
+
+4). It uses the SQL3 datatypes as column values. SQL3 types are Blob, Clob, Array, Structured type, Ref.
+
+5). Increased support for storing persistent objects in the java programming language.
+
+6). Supports for time zones in Date, Time, and Timestamp values.
+
+7). Full precision for java.math.BigDecimal values.
+
+Features of JDBC 3.0 API
+
+1). Reusabilty of prepared statements by connection pools.
+
+2). In this version there is number of properties defined for the ConnectionPoolDataSource. These properties can be used to describe how the PooledConnection objects created by DataSource objects should be pooled.
+
+3) A new concept has been added to this API is of savepoints.
+
+4). Retrieval of parameter metadata.
+
+5). It has added a means of retrieving values from columns containing automatically generated values.
+
+6). Added a new data type i.e. java.sql.BOOLEAN.
+
+7). Passing parameters to CallableStatement.
+
+8). The data in the Blob and Clob can be altered.
+
+9). DatabaseMetaData API has been added.
+
+Features of JDBC 4.0 :
+
+1). Auto- loading of JDBC driver class.
+
+2). Connection management enhancements.
+
+3.) Support for RowId SAL type.
+
+4). SQL exception handling enhancements.
+
+5). DataSet implementation of SQl using Annotations.
+
+6). SQL XML support

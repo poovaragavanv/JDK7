@@ -1,0 +1,61 @@
+# Collections are not Type-safe
+
+The pre-JDK 1.5 approach has the following drawbacks:
+
+1.The upcasting to java.lang.Object is done implicitly by the compiler. But, the programmer has to explicitly downcast the Object retrieved back to their original class.
+2.The compiler is not able to check whether the downcasting is valid at compile-time. Incorrect downcasting will show up only at runtime, as a ClassCastException. This is known as dynamic binding or late binding. For example, if you accidentally added an Integer object into the above list which is intended to hold String, the error will show up only when you try to downcast the Integer to String - at runtime. For example,
+
+// lst is designed to hold Strings
+lst.add(new Integer(88));  // adds an Integer, implicitly upcast to Object, okay in compile/runtime
+ 
+Iterator iter = lst.iterator();
+while (iter.hasNext()) {
+   String str = (String)iter.next(); // compile okay but runtime ClassCastException
+   System.out.println(str);
+}
+
+# Generics (JDK 1.5)
+
+JDK 1.5 introduces a new feature called generics to resolve this problem. Generics allow us to pass type information, in the form of <type>, to the compiler, so that the compiler can perform all the necessary type-check during compilation to ensure type-safety at runtime.
+You place the arguments inside the round bracket () and pass them to the method. In generics, instead of pass arguments, we pass type information inside the angle brackets <> to the compiler.
+
+#  ArrayList with Generics (JDK 1.5)
+
+// Post-JDK 1.5 with Generics
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Iterator;
+ 
+public class ArrayListPostJDK15Test {
+   public static void main(String[] args) {
+      List<String> lst = new ArrayList<String>();  // Inform compiler about the type
+      lst.add("alpha");         // compiler checks if argument's type is String
+      lst.add("beta");
+      lst.add("charlie");
+      System.out.println(lst);  // [alpha, beta, charlie]
+ 
+      Iterator<String> iter = lst.iterator();   // Iterator of Strings
+      while (iter.hasNext()) {
+         String str = iter.next();  // compiler inserts downcast operator
+         System.out.println(str);
+      }
+ 
+//      lst.add(new Integer(1234));   // ERROR: compiler can detect wrong type
+//      Integer intObj = lst.get(0);  // ERROR: compiler can detect wrong type
+ 
+      // Enhanced for-loop (JDK 1.5)
+      for (String str : lst) {
+         System.out.println(str);
+      }
+   }
+}
+
+# Backward Compatibility
+
+If you compile a pre-JDK 1.5 program using JDK 1.5 and above compiler, e.g.,
+// Pre-JDK 1.5
+List lst = new ArrayList();  // No type information
+lst.add("alpha");   // Without generics, compiler can't check if the type is correct
+
+You may need to include the -Xlint:unchecked option. The compiler issues these warning messages to warn you about the unsafe operations (i.e., the compiler is unable to check for the type and ensure type-safety at runtime).
+

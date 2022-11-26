@@ -1,0 +1,24 @@
+Interthread Communication 
+	
+	Using wait(), notify() and notifyAll()
+
+
+Threads can communicate with each other using wait(), notify() and notifyAll() methods. These methods are final methods of java.lang.Object class. That means every class in java will have these methods. Below is the method signatures of these methods.
+
+
+ 
+	public final void wait() throws InterruptedException
+
+	public final void notify()
+
+	public final void notifyAll()
+
+
+Important Note : These three methods must be called within synchronized method or block. Any thread which calls these methods must have lock of that object.
+
+wait(), notify() and notifyAll() are final methods of java.lang.Object class not java.lang.Thread class.
+wait(), notify() and notifyAll() – all these three methods throw IllegalMonitorStateException if the calling thread does not owns the object lock.
+wait() method is overloaded in Object class. There are two more wait() methods available in Object class. They are,
+
+	public final void wait(long timeOut)
+	public final void wait(long timeOut, int nanos)

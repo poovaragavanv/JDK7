@@ -1,0 +1,23 @@
+Decorator Design Pattern
+
+Decorator Design pattern provides a way to add additional functionality to an object without modifying it. The additional functionality is added to the object at runtime and it does not require extending the class.
+
+Decorators have the same interface as the object they are decorating. Their purpose is to provide additional features at runtime and they can also be chained. In other words you can combine multiple decorators and they can be in any order.
+
+Before we look at the classes though, lets see the various parts of the decorator pattern
+
+component– This defines an interface that we are trying to decorate or add features to.
+concrete component– This is the object to which we dynamically add functionalities
+Decorator– This will be extended by the various decorators. It conforms to the Component interface and also stores the reference to the Concrete Component.
+concrete Decorator– This are the actual implementations of the decorators.
+
+Here are the various classes.
+
+Client
+Components – Profiles
+Decorators – Profile Printers Client
+
+Before we wrap up, here are the salient features of the decorator pattern.
+
+Decorator pattern adds functionality to an object without modifying it.
+Decorator pattern can be used when extending classes creates a profusion of classes, i.e. a lot of classes have to be created to cover all the use cases. The fact that decorators can be chained can be useful in achieving a high number of combinations of functionalities.The decorators have to implement the interface that they are decorating and hence it would be good to keep those interfaces light weight.

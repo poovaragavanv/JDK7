@@ -1,0 +1,146 @@
+=> FileIO
+
+#File() - FileSystem 
+#PrintWriter() - Write a file 
+#Scanner() - read from system.in
+
+Eg:
+
+File file = new File("Demo.txt");
+// Method1
+PrintWriter Output = new PrintWriter(file);
+output.println("Ragavan");
+Output.println(34);
+output.close();
+//Take input from User
+Scanner input = new Scanner(file);
+String name = input.nextLine();
+String age = input.nextInt();
+S.o.p("Name");
+
+
+# File Reader:
+
+try {
+ 
+    FileReader reader1 = new FileReader("/path/to/yourfile1.txt");
+ 
+    File file = new File("/path/to/data.txt");
+    FileReader reader2 = new FileReader(file);
+    // code to read…
+ 
+} catch (FileNotFoundException ex) {
+    System.err.println(ex);
+}
+
+# Reading Characters from a File
+The FileReader class inherits 4 different read methods from the Reader and InputStreamReader:
+
+int read(): reads a single character, and returns the character as an integer value.
+int read(char[] cbuf): reads characters to an array, and returns the number of characters read.
+int read(char[] cbuf, int offset, int length): reads characters to a portion of an array, and returns the number of characters read.
+int read(CharBuffer target): reads characters into a character buffer, and returns the number of characters added to the buffer.
+
+# Writing Characters to a File
+The FileWriter class inherits the following write methods from its super classes Writer and OutputStreamWriter:
+write(int c): writes a single character.
+write(char[] cbuf): writes an array of characters.
+write(char[] cbuf, int offset, int length): writes a portion of an array of characters.
+write(String str): writes a String.
+write(String str, int offset, int length): writes a portion of a String.
+
+# FileReader and FileWriter
+
+try (
+ 
+    FileReader reader = new FileReader("data1.txt");
+    FileWriter writer = new FileWriter("data2.txt");
+) {
+ 
+    int charRead = -1;
+ 
+    while ((charRead = reader.read()) != -1) {
+        writer.write(charRead);
+    }
+ 
+} catch (IOException ex) {
+    System.err.println(ex);
+}
+
+#Reading from Text File Example
+ 
+import java.io.FileReader;
+import java.io.IOException;
+ 
+public class TextFileReadingExample1 {
+ 
+    public static void main(String[] args) {
+        try {
+            FileReader reader = new FileReader("data.txt");
+            int character;
+ 
+            while ((character = reader.read()) != -1) {
+                System.out.print((char) character);
+            }
+            reader.close();
+ 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+ 
+}
+
+The following example reads a text file with assumption that the encoding is UTF-16:
+
+ 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+ 
+public class TextFileReadingExample2 {
+ 
+    public static void main(String[] args) {
+        try {
+            FileInputStream inputStream = new FileInputStream("data.txt");
+            InputStreamReader reader = new InputStreamReader(inputStream, "UTF-16");
+            int character;
+ 
+            while ((character = reader.read()) != -1) {
+                System.out.print((char) character);
+            }
+            reader.close();
+ 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+ 
+}
+
+BufferedReader:
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class TextFileReadingExample3 {
+ 
+    public static void main(String[] args) {
+        try {
+            FileReader reader = new FileReader("data.txt");
+            BufferedReader bufferedReader = new BufferedReader(reader);
+ 
+            String line;
+ 
+            while ((line = bufferedReader.readLine()) != null) {
+                System.out.println(line);
+            }
+            reader.close();
+ 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+ 
+}

@@ -1,0 +1,51 @@
+Different types of driver available in JDBC.
+
+	Type-1 Driver or JDBC-ODBC bridge
+	Type-2 Driver or Native API Partly Java Driver
+	Type-3 Driver or Network Protocol Driver
+	Type-4 Driver or Thin Driver
+
+Type 1.JDBC-ODBC bridge
+
+Type-1 Driver act as a bridge between JDBC and other database connectivity mechanism(ODBC). This driver converts JDBC calls into ODBC calls and redirects the request to the ODBC driver.
+
+Advantage
+	Easy to use
+	Allow easy connectivity to all database supported by the ODBC Driver.
+Disadvantage
+	Slow execution time
+	Dependent on ODBC Driver.
+	Uses Java Native Interface(JNI) to make ODBC call.
+Type 2.Native API Driver
+
+	This type of driver make use of Java Native Interface(JNI) call on database specific native client 			API. These native client API are usually written in C and C++.
+
+Advantage
+	faster as compared to Type-1 Driver
+	Contains additional features.
+Disadvantage
+	Requires native library
+	Increased cost of Application
+
+Type 3.Network Protocol Driver
+	
+	This driver translate the JDBC calls into a database server independent and Middleware server-		specific calls. Middleware server further translate JDBC calls into database specific calls.
+
+Advantage
+	Does not require any native library to be installed.
+	Database Independency.
+	Provide facility to switch over from one database to another database.
+Disadvantage
+	Slow due to increase number of network call.
+
+Type 4.Thin Driver
+
+	This is Driver called Pure Java Driver because. This driver interact directly with database. It does 		not require any native database library, that is why it is also known as Thin Driver.
+
+Advantage
+	Does not require any native library.
+	Does not require any Middleware server.
+	Better Performance than other driver.
+
+Disadvantage
+	Slow due to increase number of network call.
